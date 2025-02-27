@@ -18,8 +18,8 @@ Yamen is a research scientist who is interested in human-centered NLP.
 
 
 ## Talks
-- *Computational Argumentation* in 2022 at Scads AI Summer School in Leipzig
-- *Instruction Fine-tuning using Alpaca* in 2024 at  PyData Meetup in Berlin
+- *Computational Argumentation* in 2022 at Scads AI Summer School
+- *Instruction Fine-tuning using Alpaca* in 2024 at  PyData Meetup
 
 ## Chair
 - Argmining 2024
