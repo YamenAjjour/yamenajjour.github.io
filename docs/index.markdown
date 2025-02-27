@@ -9,7 +9,7 @@ Yamen is a research scientist who is interested in human-centered NLP.
 ## Research interests
 - **Perspectivist NLP**: Integrating all human perspectives in NLP methodology
 - **Human-LLM Collaboration**: Enabling effective collaboration between LLMs and Humans in applications such as data annotation
-- **Priming**: Sampling strategies to optimize LLMs in a task-specific or instance-specific ways
+- **Priming**: Sampling strategies to optimize LLMs in a task-specific or instance-specific way
 
 
 ## Awards
