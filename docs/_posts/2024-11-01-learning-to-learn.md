@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Learning to learn"
+title:  "Book: Learning to learn"
 date:   2024-11-01 10:48:48 +0100
 categories: deep-learning
 ---
