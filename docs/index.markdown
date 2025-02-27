@@ -6,7 +6,6 @@ layout: home
 ---
 Yamen is a research scientist who is interested in human-centered NLP.
 
-[Publication](https://scholar.google.com/citations?user=PDrc-BUAAAAJ&hl=de&oi=ao)
 
 ## Research interests
 - **Perspectivist NLP**: Integrating all human perspectives in NLP methodology
@@ -28,3 +27,7 @@ Yamen is a research scientist who is interested in human-centered NLP.
 - ACL 2025
 
 
+[Publications](https://scholar.google.com/citations?user=PDrc-BUAAAAJ&hl=de&oi=ao)
+
+
+--- 
