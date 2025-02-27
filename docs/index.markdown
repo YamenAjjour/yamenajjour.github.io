@@ -6,8 +6,8 @@ layout: home
 ---
 Yamen is a research scientist who is interested in human-centered NLP.
 
-```
-## Research interests
+
+### Research interests
 - **Perspectivist NLP**: Integrating all human perspectives in NLP methodology
 - **Human-LLM Collaboration**: Enabling effective collaboration between LLMs and Humans in applications such as data annotation
 - **Priming**: Sampling strategies to optimize LLMs in a task-specific or instance-specific way
@@ -15,17 +15,15 @@ Yamen is a research scientist who is interested in human-centered NLP.
 Here is my [Publications](https://scholar.google.com/citations?user=PDrc-BUAAAAJ&hl=de&oi=ao)
 
 
-## Awards
+### Awards
 - Best Paper Award at the 2019 German Conference of Artifical Intelligence
 - Outstanding Reviewer Award at EACL 2023
 
 
-## Talks
+### Talks
 - *Computational Argumentation* in 2022 at Scads AI Summer School
 - *Instruction Fine-tuning using Alpaca* in 2024 at  PyData Meetup
 
-## Chair
+### Chair
 - Argmining 2024
 - ACL 2025
-
-```
