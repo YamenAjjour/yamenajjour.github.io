@@ -1,0 +1,14 @@
+---
+---
+
+@import
+  "minima/skins/{{ site.minima.skin | default: 'classic' }}",
+  "minima/initialize";
+#posts
+{
+       margin-top: 50px;
+}
+.feed-subscribe
+{
+    visibility: hidden;
+    }
