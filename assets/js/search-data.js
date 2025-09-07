@@ -53,10 +53,13 @@ ninja.data = [{
           description: "",
           section: "Books",handler: () => {
               window.location.href = "/books/the_godfather/";
-            },},{id: "news-i-will-be-co-organizing-argmining-2024-in-thailand",
-          title: 'I will be co-organizing ArgMining 2024 in Thailand',
+            },},{id: "news-i-will-be-giving-a-talk-at-pydata-meetup-in-berlin",
+          title: 'I will be giving a talk at PyData Meetup in Berlin',
           description: "",
-          section: "News",},{id: "news-yamen-has-been-invited-to-the-lorentz-center-workshop-on-hybrid-argumentation-and-responsible-ai",
+          section: "News",},{id: "news-i-will-be-co-organizing-argmining-2024-at-acl-in-bangkok-thailand",
+          title: 'I will be co-organizing ArgMining 2024 at ACL in Bangkok, Thailand',
+          description: "",
+          section: "News",},{id: "news-yamen-has-been-invited-to-the-lorentz-center-workshop-on-hybrid-argumentation-and-responsible-ai-in-leiden-netherlands",
           title: 'Yamen has been invited to the Lorentz Center Workshop on Hybrid Argumentation and...',
           description: "",
           section: "News",},{id: "news-our-paper-exploring-llms-priming-strategies-for-few-shot-stance-classification-has-been-accepted-at-argmining-2025-acl-in-vienna",
