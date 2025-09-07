@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-Yamen has been invited to the Lorentz Center Workshop on Hybrid Argumentation and Responsible AI
+Yamen has been invited to the Lorentz Center Workshop on Hybrid Argumentation and Responsible AI in Leiden, Netherlands

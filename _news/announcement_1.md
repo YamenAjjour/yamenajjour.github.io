@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-I will be co-organizing ArgMining 2024 in Thailand
+I will be co-organizing ArgMining 2024 at ACL in Bangkok, Thailand
