@@ -25,7 +25,7 @@ ninja.data = [{
           },
         },{id: "nav-repositories",
           title: "repositories",
-          description: "Edit the `_data/repositories.yml` and change the `github_users` and `github_repos` lists to include your own GitHub profile and repositories.",
+          description: "",
           section: "Navigation",
           handler: () => {
             window.location.href = "/repositories/";
@@ -59,7 +59,7 @@ ninja.data = [{
           section: "News",},{id: "news-yamen-has-been-invited-to-the-lorentz-center-workshop-on-hybrid-argumentation-and-responsible-ai",
           title: 'Yamen has been invited to the Lorentz Center Workshop on Hybrid Argumentation and...',
           description: "",
-          section: "News",},{id: "news-our-paper-exploring-llms-priming-strategies-for-few-shot-stance-classification-has-been-accepted-at-argmining-2025-in-vienna",
+          section: "News",},{id: "news-our-paper-exploring-llms-priming-strategies-for-few-shot-stance-classification-has-been-accepted-at-argmining-2025-acl-in-vienna",
           title: 'Our Paper Exploring LLMs Priming Strategies for Few-shot Stance Classification has been accepted...',
           description: "",
           section: "News",},{
