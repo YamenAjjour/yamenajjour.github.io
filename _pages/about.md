@@ -28,7 +28,7 @@ latest_posts:
 ---
 
 Yamen Ajjour is interested in tackling subjectivity in natural language processing. This includes
-1. Developing methods that generalize to unseen subjective tasks.
+1. Developing LLM-based methods that generalize to unseen subjective tasks (e.g., Hate Speech Detection).
 2. Conversational Data Annotation: developing methods to explain and disambiguate annotations in subjective tasks.
 
 My PhD was on ***Addressing Controversial Topics in Search Engines*** where I worked on 
