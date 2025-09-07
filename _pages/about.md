@@ -34,5 +34,5 @@ Yamen Ajjour is interested in tackling subjectivity in natural language processi
 My PhD was on ***Addressing Controversial Topics in Search Engines*** where I worked on 
 
 1. Identifying argumentative questions 
-2. Generalizability across topic and genre in argument mining
+2. Generalizability of argument mining methods across topic and genre
 3. Identifying and visualizing frames in argumentation
