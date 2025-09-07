@@ -90,7 +90,6 @@
       "icon": "fa-solid fa-hashtag",
       "keywords": [
         "PyTorch",
-        "Hugging Face",
         "SciPy",
         "Scikit-learn",
         "PySpark",
@@ -103,6 +102,7 @@
       "level": "Master",
       "icon": "fa-solid fa-hashtag",
       "keywords": [
+        "Hugging Face",
         "Spacy",
         "NLTK",
         "Lucene"
