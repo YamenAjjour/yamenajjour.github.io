@@ -35,4 +35,4 @@ My PhD Thesis was on *Addressing Controversial Topics in Search Engines* where I
 
 1. Identifying argumentative questions 
 2. Genre-robust argument unit segmentation and topic bias in argument corpora
-3. Identifying and visualizing frames in Argumentation
+3. Identifying and visualizing frames in argumentation
