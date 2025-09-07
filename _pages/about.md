@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle: <a href='#'>Affiliations</a>. Research Scientist
+subtitle: Research Scientist
 
 profile:
   align: right
