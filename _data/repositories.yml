@@ -1,14 +1,11 @@
 github_users:
-  - torvalds
-  - alshedivat
+  - YamenAjjour
+
 
 repo_description_lines_max: 2
 
 github_repos:
-  - alshedivat/al-folio
-  - jekyll/jekyll
-  - twbs/bootstrap
-  - jquery/jquery
-  - FortAwesome/Font-Awesome
-  - mathjax/MathJax
-  - jpswalsh/academicons
+  - webis-de/priming-strategies-for-stance-classification
+  - YamenAjjour/SciAssist
+  - YamenAjjour/Raqeeb
+  - YamenAjjour/fake-transaction-detection
