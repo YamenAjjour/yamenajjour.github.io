@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-Our Paper Exploring LLMs Priming Strategies for Few-shot Stance Classification has been accepted at ArgMining 2025 in Vienna
+Our Paper Exploring LLMs Priming Strategies for Few-shot Stance Classification has been accepted at ArgMining 2025, ACL in Vienna
