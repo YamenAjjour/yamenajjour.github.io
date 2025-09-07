@@ -59,6 +59,9 @@ ninja.data = [{
           section: "News",},{id: "news-our-paper-exploring-llms-priming-strategies-for-few-shot-stance-classification-has-been-accepted-at-argmining-2025-in-vienna",
           title: 'Our Paper Exploring LLMs Priming Strategies for Few-shot Stance Classification has been accepted...',
           description: "",
+          section: "News",},{id: "news-yamen-has-been-invited-to-the-lorentz-center-workshop-on-hybrid-argumentation-and-responsible-ai",
+          title: 'Yamen has been invited to the Lorentz Center Workshop on Hybrid Argumentation and...',
+          description: "",
           section: "News",},{
         id: 'social-email',
         title: 'email',
