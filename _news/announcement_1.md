@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-A simple inline announcement.
+I will be co-organizing ArgMining 2024 in Thailand
