@@ -31,4 +31,8 @@ Yamen Ajjour is interested in tackling subjectivity in natural language processi
 1. Developing methods that generalize to unseen subjective tasks.
 2. Conversational Data Annotation: developing methods to explain and disambiguate annotations in subjective tasks.
 
-My PhD Thesis was on *Addressing Controversial Topics in Search Engines* where I worked on argument unit segmentation, framing, and argumentative questions. 
+My PhD Thesis was on *Addressing Controversial Topics in Search Engines* where I worked on 
+
+1. Identifying argumentative questions 
+2. Genre-robust argument unit segmentation and topic bias in argument corpora
+3. Identifying and visualizing frames in Argumentation
