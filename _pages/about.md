@@ -28,5 +28,5 @@ latest_posts:
 ---
 
 Yamen Ajjour is a research scientist who is interested in tackling subjectivity in natural language processing. This includes
-1. Developing methods that generalize to unseen subjective tasks 
-2. Conversational Data Annotation: developing methods to explain and disambiguate annotations  
+1. Developing methods that generalize to unseen subjective tasks.
+2. Conversational Data Annotation: developing methods to explain and disambiguate annotations in subjective tasks.
