@@ -37,9 +37,9 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-book-learning-to-learn",
+        },{id: "post-vision-paper-the-agentic-state",
         
-          title: "Book: Learning to learn",
+          title: "Vision Paper: The Agentic State",
         
         description: "",
         section: "Posts",
