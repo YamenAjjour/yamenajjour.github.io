@@ -6,7 +6,7 @@ date:   2025-10-31 10:48:48 +0100
 categories: Agentic AI
 ---
 
-The following is a summary of a [https://agenticstate.org/paper.html#whitepaper-reader](vision paper) which is published at the 2025 Tallinn Digital Summit about the *Agentic State*. Prominent politicians from around the globe have gathered to come up with a feasible vision that goes beyond a digital government to an Agentic Government.   
+The following is a summary of [the agetnic state](https://agenticstate.org/paper.html#whitepaper-reader) which is published at the 2025 Tallinn Digital Summit about the *Agentic State*. Prominent politicians from around the globe have gathered to come up with a feasible vision that goes beyond a digital government to an Agentic Government.   
 The main message of the paper is the urgent need for governments to adapt agentic AI in their workflows and provide use cases and the requirements for deploying Agentic AI in a fruitful way. The main reason is the gap confronted by citizens between the internet culture (e.g., Netflix) and the bureaucratic processes enforced by existing governments. The transformation to an AI-based government should be accomplished by realizing twelve layers. The twelve layers are divided into:
 - Six implementation layers that represent different sectors:
     - User Interface transform from fragmented portals into centralized, personalized, and multimodal agents.
