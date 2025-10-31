@@ -45,7 +45,7 @@ ninja.data = [{
         section: "Posts",
         handler: () => {
           
-            window.location.href = "/categories/";
+            window.location.href = "/agentic-state/";
           
         },
       },{id: "post-book-learning-to-learn",
@@ -56,7 +56,7 @@ ninja.data = [{
         section: "Posts",
         handler: () => {
           
-            window.location.href = "/categories/";
+            window.location.href = "/learning-to-learn/";
           
         },
       },{id: "books-the-godfather",
