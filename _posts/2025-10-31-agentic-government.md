@@ -3,7 +3,7 @@ layout: post
 title:  "Vision Paper: The Agentic State"
 permalink: /categories/
 date:   2025-10-31 10:48:48 +0100
-categories: deep-learning
+categories: Agentic AI
 ---
 
 The Agentic State Rethinking Government for the Era of Agentic AI is a vision paper which is published at the 2025 Tallinn Digital Summit. Prominent politicians from around the globe have gathered to come up with a feasible vision that goes beyond a digital government to an *Agentic Government*.   
