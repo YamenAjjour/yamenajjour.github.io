@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Vision Paper: The Agentic State"
-permalink: /categories/
+permalink: /agentic-state/
 date:   2025-10-31 10:48:48 +0100
 categories: Agentic AI
 ---

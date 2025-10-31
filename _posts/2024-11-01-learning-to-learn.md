@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Book: Learning to learn"
-permalink: /categories/
+permalink: /learning-to-learn/
 date:   2024-11-01 10:48:48 +0100
 categories: deep-learning
 ---
