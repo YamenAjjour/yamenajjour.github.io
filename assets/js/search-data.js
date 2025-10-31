@@ -48,6 +48,17 @@ ninja.data = [{
             window.location.href = "/categories/";
           
         },
+      },{id: "post-book-learning-to-learn",
+        
+          title: "Book: Learning to learn",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/categories/";
+          
+        },
       },{id: "books-the-godfather",
           title: 'The Godfather',
           description: "",
