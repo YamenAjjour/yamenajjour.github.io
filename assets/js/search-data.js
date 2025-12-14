@@ -37,7 +37,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-vision-paper-the-agentic-state",
+        },{id: "post-vision-paper-problem-solving-through-human-ai-preference-based-cooperation",
+        
+          title: "Vision Paper: Problem Solving Through Human-AI Preference-based Cooperation",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/agentic-state/";
+          
+        },
+      },{id: "post-vision-paper-the-agentic-state",
         
           title: "Vision Paper: The Agentic State",
         
