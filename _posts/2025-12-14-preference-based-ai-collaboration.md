@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "Vision Paper: Problem Solving Through Human-AI Preference-based Cooperation"
-permalink: /agentic-state/
+title:  "Position Paper: Problem Solving Through Human-AI Preference-based Cooperation"
+permalink: /preference-based cooperation/
 date:   2025-12-14 11:12:00 +0100
 categories: Agentic AI
 ---
