@@ -15,7 +15,7 @@ The Solution: A New Framework for Collaborative AI
 The researchers propose a new approach to build AI agents that don't just follow simple instructions, but can genuinely partner with humans to create complex solutions, such as new software programs.
 
 The core idea is to treat the process of creation like a shared exploration guided by human feedback (language-based requests or confirmations). The framework is built on several key design choices:
-Key Design Choices:
+
 1. **Shared Exploration** (The "Search"): Instead of just giving one answer, the AI should explore a whole range of potential solutions. Human feedback (given in natural language) acts like a compass, helping the AI navigate this space of possibilities toward the best outcome.
    - Representation: Solutions (like a piece of software) must be understood and talked about at different levels, from the high-level Goals (requirements) to the blueprint (architecture), the design (how parts fit together), and the actual Code (implementation).
    - Quality Check (Utility): The system needs a way to measure the "goodness" of any solution using multiple metrics. For example, is the new computer program fast, or does it use too much memory?
