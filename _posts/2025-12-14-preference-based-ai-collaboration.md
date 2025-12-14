@@ -23,6 +23,7 @@ The core idea is to treat the process of creation like a shared exploration guid
 
 2. **Pre-defined Collaboration (Communication Protocol)**: A defined set of conversational acts is needed to clarify the interaction between the human and the AI. This includes clear ways for the human to Critique a solution, offer Confirmation, or request a specific Modification.
 Major Unanswered Questions for Research
+
 The framework opens up challenging questions for future research:
    - *Learning from Fixes (Edits-based learning)*: Instead of saving every piece of conversational context, how can the AI learn general rules by comparing the quality of the solution before a human edit to the quality after the edit?
    - *Safety in Shared Creation*: Since the AI is involved in shaping the final objective, how do we ensure the AI cannot subtly manipulate the goals in a way that is harmful or unsafe?
