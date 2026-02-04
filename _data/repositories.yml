@@ -6,9 +6,11 @@ repo_description_lines_max: 1
 github_repos:
   - webis-de/priming-strategies-for-stance-classification
   - YamenAjjour/SciAssist
+  - YamenAjjour/obama-digital-twin
   - YamenAjjour/fake-transaction-detection
   - YamenAjjour/fast-topi
   - YamenAjjour/Raqeeb
   - YamenAjjour/support-vector-machine
+  -
 
 
