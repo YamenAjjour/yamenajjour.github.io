@@ -87,6 +87,9 @@ ninja.data = [{
           section: "News",},{id: "news-our-paper-exploring-llms-priming-strategies-for-few-shot-stance-classification-has-been-accepted-at-argmining-2025-acl-in-vienna",
           title: 'Our Paper Exploring LLMs Priming Strategies for Few-shot Stance Classification has been accepted...',
           description: "",
+          section: "News",},{id: "news-our-paper-argbench-benchmarking-llms-on-computational-argumentation-tasks-with-carlotta-quensel-nedim-lipka-and-henning-wachsmuth-has-been-accepted-at-acl2026-findings",
+          title: 'Our paper “ArgBench: Benchmarking LLMs on Computational Argumentation Tasks” with Carlotta Quensel, Nedim...',
+          description: "",
           section: "News",},{
         id: 'social-github',
         title: 'GitHub',
