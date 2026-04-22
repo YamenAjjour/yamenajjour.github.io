@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-Our paper "ArgBench: Benchmarking LLMs on Computational Argumentation Tasks" with Carlotta Quensel, Nedim Lipka, and Henning Wachsmuth has been accepted at #ACL2026 (Findings).
+Our paper "ArgBench: Benchmarking LLMs on Computational Argumentation Tasks"  has been accepted at [ACL2026](https://2026.aclweb.org/) (Findings).
