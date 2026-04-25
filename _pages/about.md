@@ -9,9 +9,7 @@ profile:
   image: prof_pic.jpg
   image_circular: false # crops the image to make it circular
   more_info: >
-    <p>F432</p>
-    <p>Welfengarten 1</p>
-    <p>Hannover, Niedersachsen 30167</p>
+    <p>Hannover, Niedersachsen 30171</p>
 
 selected_papers: false # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
@@ -27,9 +25,7 @@ latest_posts:
   limit: 3 # leave blank to include all the blog posts
 ---
 
-Yamen Ajjour is interested in tackling subjectivity in natural language processing. This includes
-1. Developing LLM-based methods that generalize to unseen subjective tasks (e.g., Hate Speech Detection).
-2. Conversational Data Annotation: developing methods to explain and disambiguate annotations in subjective tasks.
+Yamen Ajjour is interested in multimodality (particularly speech and text), ethical ai, and ai for science. 
 
 My PhD was on ***Addressing Controversial Topics in Search Engines*** where I worked on 
 
