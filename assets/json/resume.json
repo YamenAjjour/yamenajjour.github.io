@@ -23,13 +23,11 @@
   },
   "work": [
     {
-      "name": "Institute for Artifical Intelligence, Hannover University",
+      "name": "Department Computer Science and Artificial Intelligence , University of Technology Nuremberg",
       "position": "Postdoctoral Researcher",
       "url": "https://www.ai.uni-hannover.de/de/institut/team-luhai/yamen-ajjour",
-      "startDate": "2023-01-01",
-      "endDate": "2026-01-01",
-      "summary": "Conducting Research on Tackling Subjective Tasks with Large Language Models",
-      "highlights": ["Large Language Models"]
+      "startDate": "2026-05-01",
+      "summary": "Conducting Research on Authorship Analytics and Digital Maniuplation"
     }
   ],
   "volunteer": [
