@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ArgBench Leaderboard</title>
+<meta name="description" content="Leaderboard of LLMs on ArgBench, a benchmark of 46 computational argumentation tasks across five skills.">
+<style>
+:root {
+  --bg: #fbfbfa; --surface: #ffffff; --surface-2: #f3f3f1; --text: #1c1d1f; --muted: #62656b;
+  --border: #e3e3df; --accent: #2f5bd3; --accent-soft: #e8eefc; --bar: #c9d6f7; --best: #1d4ed8;
+  --paper: #eef0f3; --paper-text: #4b5160; --run: #e7f6ee; --run-text: #1d7a4a;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121316; --surface: #191b1f; --surface-2: #20232a; --text: #e8e9ec; --muted: #9a9ea8;
+    --border: #2c3038; --accent: #7ea2ff; --accent-soft: #1f2a44; --bar: #2c3d68; --best: #a9c1ff;
+    --paper: #252932; --paper-text: #b3b9c6; --run: #17332a; --run-text: #74d3a1;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121316; --surface: #191b1f; --surface-2: #20232a; --text: #e8e9ec; --muted: #9a9ea8;
+  --border: #2c3038; --accent: #7ea2ff; --accent-soft: #1f2a44; --bar: #2c3d68; --best: #a9c1ff;
+  --paper: #252932; --paper-text: #b3b9c6; --run: #17332a; --run-text: #74d3a1;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font: 15px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 16px; }
+header { padding: 48px 0 24px; }
+h1 { font-size: 34px; line-height: 1.15; margin: 0 0 10px; letter-spacing: -0.02em; }
+h2 { font-size: 20px; margin: 0 0 6px; letter-spacing: -0.01em; }
+h3 { font-size: 15px; margin: 22px 0 8px; }
+.lede { color: var(--muted); max-width: 720px; margin: 0 0 18px; font-size: 16px; }
+.links { display: flex; gap: 8px; flex-wrap: wrap; }
+.links a {
+  color: var(--text); text-decoration: none; border: 1px solid var(--border); background: var(--surface);
+  padding: 6px 12px; border-radius: 8px; font-size: 14px;
+}
+.links a:hover { border-color: var(--accent); color: var(--accent); }
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border);
+  border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin: 26px 0 8px; }
+.stat { background: var(--surface); padding: 14px 16px; }
+.stat b { display: block; font-size: 22px; font-variant-numeric: tabular-nums; }
+.stat span { color: var(--muted); font-size: 13px; }
+nav.tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--border); margin: 24px 0 20px; overflow-x: auto; }
+nav.tabs button {
+  background: none; border: 0; border-bottom: 2px solid transparent; color: var(--muted);
+  padding: 10px 12px; font: inherit; font-weight: 500; cursor: pointer; white-space: nowrap;
+}
+nav.tabs button[aria-selected="true"] { color: var(--text); border-bottom-color: var(--accent); }
+.panel[hidden] { display: none; }
+.controls { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; margin: 14px 0; }
+.seg { display: inline-flex; background: var(--surface-2); border-radius: 9px; padding: 3px; flex-wrap: wrap; }
+.seg button {
+  border: 0; background: none; color: var(--muted); font: inherit; font-size: 14px;
+  padding: 5px 12px; border-radius: 7px; cursor: pointer;
+}
+.seg button[aria-pressed="true"] { background: var(--surface); color: var(--text); box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+label.check { display: inline-flex; gap: 6px; align-items: center; color: var(--muted); font-size: 14px; cursor: pointer; }
+select { font: inherit; font-size: 14px; padding: 5px 8px; border-radius: 7px; border: 1px solid var(--border);
+  background: var(--surface); color: var(--text); }
+.table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+th, td { padding: 9px 10px; text-align: right; white-space: nowrap; border-bottom: 1px solid var(--border); }
+tr:last-child td { border-bottom: 0; }
+th { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); font-weight: 600;
+  background: var(--surface-2); position: relative; }
+th.sortable { cursor: pointer; user-select: none; }
+th.sortable:hover { color: var(--text); }
+th .arrow { opacity: .8; margin-left: 3px; }
+th.l, td.l { text-align: left; }
+td.rank { color: var(--muted); width: 1%; }
+td.model { font-weight: 600; }
+td.model small { display: block; font-weight: 400; color: var(--muted); font-size: 12px; }
+td.best { color: var(--best); font-weight: 700; }
+td.macro { font-weight: 700; }
+.barcell { display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
+.bar { width: 44px; height: 6px; background: var(--surface-2); border-radius: 3px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--bar); }
+.best .bar i, td.macro.best .bar i { background: var(--accent); }
+.tag { display: inline-block; font-size: 11px; font-weight: 600; padding: 1px 7px; border-radius: 999px; margin-left: 6px; vertical-align: 1px; }
+.tag.paper { background: var(--paper); color: var(--paper-text); }
+.tag.run { background: var(--run); color: var(--run-text); }
+.tag.closed { background: var(--accent-soft); color: var(--accent); }
+.skill-row td { background: var(--surface-2); font-weight: 600; text-align: left; font-size: 13px; }
+.note { color: var(--muted); font-size: 13.5px; margin: 10px 2px 0; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.card { border: 1px solid var(--border); background: var(--surface); border-radius: 10px; padding: 16px 18px; }
+.card p, .card ul { margin: 6px 0 0; color: var(--muted); font-size: 14px; }
+.card ul { padding-left: 18px; }
+pre { background: var(--surface-2); border-radius: 8px; padding: 14px; overflow-x: auto; font: 12.5px/1.5 var(--mono); margin: 0; }
+.copy { float: right; font: inherit; font-size: 13px; border: 1px solid var(--border); background: var(--surface);
+  color: var(--text); border-radius: 7px; padding: 4px 10px; cursor: pointer; }
+footer { color: var(--muted); font-size: 13px; padding: 40px 0 48px; }
+a { color: var(--accent); }
+@media (max-width: 720px) {
+  header { padding-top: 32px; }
+  h1 { font-size: 27px; }
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .grid2 { grid-template-columns: 1fr; }
+  th, td { padding: 8px 9px; }
+  .bar { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>ArgBench Leaderboard</h1>
+    <p class="lede">How well do large language models handle computational argumentation? ArgBench evaluates LLMs on
+      46 tasks from 33 datasets, grouped into five skills: mining arguments, assessing their perspective and quality,
+      reasoning about them, and generating them.</p>
+    <div class="links">
+      <a href="https://aclanthology.org/2026.findings-acl.1099/">Paper (Findings of ACL 2026)</a>
+      <a href="https://github.com/webis-de/argbench-data">Data</a>
+      <a href="https://github.com/webis-de/argbench">Code</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>46</b><span>tasks</span></div>
+      <div class="stat"><b>33</b><span>datasets</span></div>
+      <div class="stat"><b>5</b><span>skills</span></div>
+      <div class="stat"><b>9</b><span>genres</span></div>
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button role="tab" data-tab="prompting" aria-selected="true">Prompting</button>
+    <button role="tab" data-tab="pertask" aria-selected="false" id="pertask-tab">Per-task results</button>
+    <button role="tab" data-tab="about" aria-selected="false">About the benchmark</button>
+  </nav>
+
+  <section class="panel" id="panel-prompting">
+    <h2>Prompting</h2>
+    <p class="note" style="margin-top:0">Models are prompted with each task's definition, without fine-tuning. Skill scores
+      average the tasks of a skill; <b>Macro</b> averages the five skills. Click a column to sort.</p>
+    <div class="controls">
+      <div class="seg" id="setup-seg">
+        <button data-setup="best" aria-pressed="true">Best setup</button>
+        <button data-setup="zero_shot" aria-pressed="false">Zero-shot</button>
+        <button data-setup="few_shot" aria-pressed="false">Few-shot (4)</button>
+        <button data-setup="cot" aria-pressed="false">Chain-of-thought</button>
+      </div>
+    </div>
+    <div class="table-wrap"><table id="prompting-table"></table></div>
+  </section>
+
+  <section class="panel" id="panel-pertask" hidden>
+    <h2>Per-task results</h2>
+    <p class="note" style="margin-top:0">Scores on every task, per prompting setup. Best setup per task in blue.</p>
+    <div class="controls">
+      <select id="pt-run" aria-label="Run"></select>
+    </div>
+    <div class="table-wrap"><table id="pertask-table"></table></div>
+  </section>
+
+  <section class="panel" id="panel-about" hidden>
+    <div class="grid2">
+      <div class="card"><h2>Skills</h2><ul id="skill-list"></ul></div>
+      <div class="card"><h2>Evaluation</h2>
+        <ul>
+          <li><b>Classification</b>: macro F1.</li>
+          <li><b>Segmentation</b>: F1 of exact span matches, macro-averaged over positive span labels.</li>
+          <li><b>Generation</b>: BERTScore F1.</li>
+          <li>Unparseable classification outputs receive a random candidate label.</li>
+          <li>Test sets are capped at 1,000 instances per task.</li>
+        </ul>
+      </div>
+      <div class="card"><h2>Prompting setups</h2>
+        <ul>
+          <li><b>Zero-shot</b>: task definition followed by the instance.</li>
+          <li><b>Few-shot</b>: four training examples added after the definition.</li>
+          <li><b>Chain-of-thought</b>: “Think step by step and prepend your output with Output:”.</li>
+          <li>Greedy decoding with the paper's per-task-type token limits.</li>
+        </ul>
+      </div>
+    </div>
+    <h3>Citation</h3>
+    <div class="card"><button class="copy" id="copy-bib">Copy</button>
+<pre id="bibtex">@inproceedings{ajjour-etal-2026-argbench,
+  title     = {{ArgBench}: Benchmarking {LLMs} on Computational Argumentation Tasks},
+  author    = {Ajjour, Yamen and Quensel, Carlotta and Lipka, Nedim and Wachsmuth, Henning},
+  booktitle = {Findings of the Association for Computational Linguistics: ACL 2026},
+  year      = {2026},
+  pages     = {21846--21874},
+  url       = {https://aclanthology.org/2026.findings-acl.1099/}
+}</pre></div>
+  </section>
+
+  <footer>ArgBench · Ajjour, Quensel, Lipka, and Wachsmuth · Findings of ACL 2026</footer>
+</div>
+
+<script>
+const DATA = {"prompting": [{"model": "Qwen3-4B", "params": "4B", "access": "open", "source": "run", "results": {"zero_shot": [0.376, 0.472, 0.366, 0.338, 0.815, 0.473], "few_shot": [0.362, 0.489, 0.393, 0.402, 0.836, 0.497], "cot": [0.384, 0.487, 0.399, 0.273, 0.807, 0.47]}, "tasks": {"zero_shot": {"conclusion_extraction_echr": 0.126, "premise_extraction_echr": 0.038, "premise_extraction_ibm_evidence_sentence": 0.418, "argument_relation_detection_echr": 0.124, "argument_relation_identification_microtexts_1": 0.72, "argument_relation_identification_essays": 0.689, "argument_relation_identification_microtexts_2": 0.619, "argument_relation_identification_political_debates": 0.238, "argument_relation_identification_erulemaking": 0.5, "argument_unit_classification_essays": 0.422, "argument_unit_classification_editorials": 0.34, "argument_unit_classification_erulemaking": 0.475, "argument_unit_segmentation_webDiscourse": 0.195, "argument_unit_segmentation_editorials": 0.468, "argument_unit_segmentation_essays": 0.277, "argument_unit_segmentation_echr": 0.374, "argument_similarity_ukp_aspect": 0.309, "aspect_detection_ukp_corpus": 0.0, "frame_identification_webis_argument_framing_19": 0.691, "key_point_matching_argkp": 0.591, "stance_classification_ibmsc": 0.686, "stance_classification_ukp_sentential": 0.555, "argument_ranking_ibm_rank_30k": 0.463, "argument_ranking_ibm_evidence_quality": 0.537, "argument_ranking_claim_revisions": 0.38, "argument_rating_dagstuhl_15512": 0.277, "argument_rating_gaq": 0.278, "controversy_scoring_cmv_adhominem": 0.329, "reasonableness_scoring_cmv_adhominem": 0.275, "suboptimal_claim_detection_claim_revisions": 0.268, "claim_improvement_suggestion_claim_revisions": 0.483, "fallacy_detection_cmv_adhominem": 0.68, "fallacy_detection_logic": 0.117, "fallacy_detection_elecdeb60t020": 0.007, "scheme_classification_argu": 0.242, "warrant_identification_semeval_2018_task_12": 0.643, "argument_generation_argu": 0.837, "argument_summarization_open_debate_evidence": 0.825, "conclusion_generation_belief_generation": 0.82, "claim_optimization_claim_revisions": 0.843, "counter_argument_generation_cmv": 0.82, "counter_argument_generation_candela": 0.811, "warrant_generation_art": 0.822, "warrant_generation_arc": 0.829, "warrant_generation_ideological_debate": 0.707, "warrant_generation_microtext_1": 0.835}, "few_shot": {"conclusion_extraction_echr": 0.109, "premise_extraction_echr": 0.056, "premise_extraction_ibm_evidence_sentence": 0.546, "argument_relation_detection_echr": 0.142, "argument_relation_identification_microtexts_1": 0.692, "argument_relation_identification_essays": 0.73, "argument_relation_identification_microtexts_2": 0.662, "argument_relation_identification_political_debates": 0.248, "argument_relation_identification_erulemaking": 0.508, "argument_unit_classification_essays": 0.468, "argument_unit_classification_editorials": 0.4, "argument_unit_classification_erulemaking": 0.45, "argument_unit_segmentation_webDiscourse": 0.206, "argument_unit_segmentation_editorials": 0.49, "argument_unit_segmentation_essays": 0.054, "argument_unit_segmentation_echr": 0.033, "argument_similarity_ukp_aspect": 0.322, "aspect_detection_ukp_corpus": 0.165, "frame_identification_webis_argument_framing_19": 0.686, "key_point_matching_argkp": 0.457, "stance_classification_ibmsc": 0.713, "stance_classification_ukp_sentential": 0.59, "argument_ranking_ibm_rank_30k": 0.519, "argument_ranking_ibm_evidence_quality": 0.542, "argument_ranking_claim_revisions": 0.432, "argument_rating_dagstuhl_15512": 0.409, "argument_rating_gaq": 0.117, "controversy_scoring_cmv_adhominem": 0.466, "reasonableness_scoring_cmv_adhominem": 0.328, "suboptimal_claim_detection_claim_revisions": 0.272, "claim_improvement_suggestion_claim_revisions": 0.455, "fallacy_detection_cmv_adhominem": 0.739, "fallacy_detection_logic": 0.327, "fallacy_detection_elecdeb60t020": 0.033, "scheme_classification_argu": 0.277, "warrant_identification_semeval_2018_task_12": 0.635, "argument_generation_argu": 0.853, "argument_summarization_open_debate_evidence": 0.842, "conclusion_generation_belief_generation": 0.836, "claim_optimization_claim_revisions": 0.876, "counter_argument_generation_cmv": 0.82, "counter_argument_generation_candela": 0.834, "warrant_generation_art": 0.857, "warrant_generation_arc": 0.853, "warrant_generation_ideological_debate": 0.733, "warrant_generation_microtext_1": 0.86}, "cot": {"conclusion_extraction_echr": 0.347, "premise_extraction_echr": 0.296, "premise_extraction_ibm_evidence_sentence": 0.44, "argument_relation_detection_echr": 0.423, "argument_relation_identification_microtexts_1": 0.659, "argument_relation_identification_essays": 0.601, "argument_relation_identification_microtexts_2": 0.591, "argument_relation_identification_political_debates": 0.374, "argument_relation_identification_erulemaking": 0.365, "argument_unit_classification_essays": 0.407, "argument_unit_classification_editorials": 0.12, "argument_unit_classification_erulemaking": 0.208, "argument_unit_segmentation_webDiscourse": 0.213, "argument_unit_segmentation_editorials": 0.465, "argument_unit_segmentation_essays": 0.306, "argument_unit_segmentation_echr": 0.32, "argument_similarity_ukp_aspect": 0.308, "aspect_detection_ukp_corpus": 0.008, "frame_identification_webis_argument_framing_19": 0.632, "key_point_matching_argkp": 0.629, "stance_classification_ibmsc": 0.841, "stance_classification_ukp_sentential": 0.505, "argument_ranking_ibm_rank_30k": 0.498, "argument_ranking_ibm_evidence_quality": 0.516, "argument_ranking_claim_revisions": 0.512, "argument_rating_dagstuhl_15512": 0.334, "argument_rating_gaq": 0.131, "controversy_scoring_cmv_adhominem": 0.334, "reasonableness_scoring_cmv_adhominem": 0.275, "suboptimal_claim_detection_claim_revisions": 0.478, "claim_improvement_suggestion_claim_revisions": 0.515, "fallacy_detection_cmv_adhominem": 0.533, "fallacy_detection_logic": 0.111, "fallacy_detection_elecdeb60t020": 0.07, "scheme_classification_argu": 0.096, "warrant_identification_semeval_2018_task_12": 0.556, "argument_generation_argu": 0.837, "argument_summarization_open_debate_evidence": 0.829, "conclusion_generation_belief_generation": 0.806, "claim_optimization_claim_revisions": 0.854, "counter_argument_generation_cmv": 0.817, "counter_argument_generation_candela": 0.814, "warrant_generation_art": 0.799, "warrant_generation_arc": 0.804, "warrant_generation_ideological_debate": 0.688, "warrant_generation_microtext_1": 0.817}}}], "tasks": [{"task": "conclusion_extraction_echr", "skill": "argument_mining", "title": "Conclusion Extraction", "source": "Poudyal et al. (2020)", "type": "classification"}, {"task": "premise_extraction_echr", "skill": "argument_mining", "title": "Premise Extraction", "source": "Poudyal et al. (2020)", "type": "classification"}, {"task": "premise_extraction_ibm_evidence_sentence", "skill": "argument_mining", "title": "Premise Extraction", "source": "Ein-Dor et al. (2020)", "type": "classification"}, {"task": "argument_relation_detection_echr", "skill": "argument_mining", "title": "Relation Detection", "source": "Poudyal et al. (2020)", "type": "classification"}, {"task": "argument_relation_identification_microtexts_1", "skill": "argument_mining", "title": "Relation Identification", "source": "Peldszus (2014)", "type": "classification"}, {"task": "argument_relation_identification_essays", "skill": "argument_mining", "title": "Relation Identification", "source": "Stab and Gurevych (2017)", "type": "classification"}, {"task": "argument_relation_identification_microtexts_2", "skill": "argument_mining", "title": "Relation Identification", "source": "Skeppstedt et al. (2018)", "type": "classification"}, {"task": "argument_relation_identification_political_debates", "skill": "argument_mining", "title": "Relation Identification", "source": "Menini et al. (2018)", "type": "classification"}, {"task": "argument_relation_identification_erulemaking", "skill": "argument_mining", "title": "Relation Identification", "source": "Park and Cardie (2018)", "type": "classification"}, {"task": "argument_unit_classification_essays", "skill": "argument_mining", "title": "Unit Classification", "source": "Stab and Gurevych (2017)", "type": "classification"}, {"task": "argument_unit_classification_editorials", "skill": "argument_mining", "title": "Unit Classification", "source": "Al-Khatib et al. (2016)", "type": "classification"}, {"task": "argument_unit_classification_erulemaking", "skill": "argument_mining", "title": "Unit Classification", "source": "Park and Cardie (2018)", "type": "classification"}, {"task": "argument_unit_segmentation_webDiscourse", "skill": "argument_mining", "title": "Unit Segmentation", "source": "Habernal and Gurevych (2015)", "type": "segmentation"}, {"task": "argument_unit_segmentation_editorials", "skill": "argument_mining", "title": "Unit Segmentation", "source": "Al-Khatib et al. (2016)", "type": "segmentation"}, {"task": "argument_unit_segmentation_essays", "skill": "argument_mining", "title": "Unit Segmentation", "source": "Stab and Gurevych (2017)", "type": "segmentation"}, {"task": "argument_unit_segmentation_echr", "skill": "argument_mining", "title": "Unit Segmentation", "source": "Poudyal et al. (2020)", "type": "segmentation"}, {"task": "argument_similarity_ukp_aspect", "skill": "argument_perspective_assessment", "title": "Argument Similarity", "source": "Reimers et al. (2019)", "type": "classification"}, {"task": "aspect_detection_ukp_corpus", "skill": "argument_perspective_assessment", "title": "Aspect Detection", "source": "Schiller et al. (2021)", "type": "segmentation"}, {"task": "frame_identification_webis_argument_framing_19", "skill": "argument_perspective_assessment", "title": "Frame Identification", "source": "Ajjour et al. (2019)", "type": "classification"}, {"task": "key_point_matching_argkp", "skill": "argument_perspective_assessment", "title": "Key Point Matching", "source": "Bar-Haim et al. (2020)", "type": "classification"}, {"task": "stance_classification_ibmsc", "skill": "argument_perspective_assessment", "title": "Stance Classification", "source": "Bar-Haim et al. (2017)", "type": "classification"}, {"task": "stance_classification_ukp_sentential", "skill": "argument_perspective_assessment", "title": "Stance Classification", "source": "Stab et al. (2018)", "type": "classification"}, {"task": "argument_ranking_ibm_rank_30k", "skill": "argument_quality_assessment", "title": "Argument Ranking", "source": "Gretz et al. (2020)", "type": "classification"}, {"task": "argument_ranking_ibm_evidence_quality", "skill": "argument_quality_assessment", "title": "Argument Ranking", "source": "Gleize et al. (2019)", "type": "classification"}, {"task": "argument_ranking_claim_revisions", "skill": "argument_quality_assessment", "title": "Argument Ranking", "source": "Skitalinskaya et al. (2021)", "type": "classification"}, {"task": "argument_rating_dagstuhl_15512", "skill": "argument_quality_assessment", "title": "Argument Rating", "source": "Wachsmuth et al. (2017)", "type": "classification"}, {"task": "argument_rating_gaq", "skill": "argument_quality_assessment", "title": "Argument Rating", "source": "Ng et al. (2020)", "type": "classification"}, {"task": "controversy_scoring_cmv_adhominem", "skill": "argument_quality_assessment", "title": "Controversy Scoring", "source": "Habernal et al. (2018b)", "type": "classification"}, {"task": "reasonableness_scoring_cmv_adhominem", "skill": "argument_quality_assessment", "title": "Reasonableness Scoring", "source": "Habernal et al. (2018b)", "type": "classification"}, {"task": "suboptimal_claim_detection_claim_revisions", "skill": "argument_quality_assessment", "title": "Suboptimal Claim Detection", "source": "Skitalinskaya and Wachsmuth (2023)", "type": "classification"}, {"task": "claim_improvement_suggestion_claim_revisions", "skill": "argument_quality_assessment", "title": "Claim Improvement Suggestion", "source": "Skitalinskaya and Wachsmuth (2023)", "type": "classification"}, {"task": "fallacy_detection_cmv_adhominem", "skill": "argument_reasoning", "title": "Ad-hominem Detection", "source": "Habernal et al. (2018b)", "type": "classification"}, {"task": "fallacy_detection_logic", "skill": "argument_reasoning", "title": "Fallacy Detection", "source": "Jin et al. (2022)", "type": "classification"}, {"task": "fallacy_detection_elecdeb60t020", "skill": "argument_reasoning", "title": "Fallacy Detection", "source": "Goffredo et al. (2023)", "type": "segmentation"}, {"task": "scheme_classification_argu", "skill": "argument_reasoning", "title": "Scheme Classification", "source": "Saha and Srihari (2023)", "type": "classification"}, {"task": "warrant_identification_semeval_2018_task_12", "skill": "argument_reasoning", "title": "Warrant Identification", "source": "Habernal et al. (2018a)", "type": "classification"}, {"task": "argument_generation_argu", "skill": "argument_generation", "title": "Argument Generation", "source": "Saha and Srihari (2023)", "type": "generation"}, {"task": "argument_summarization_open_debate_evidence", "skill": "argument_generation", "title": "Argument Summarization", "source": "Roush et al. (2024)", "type": "generation"}, {"task": "conclusion_generation_belief_generation", "skill": "argument_generation", "title": "Claim Generation", "source": "Alshomary et al. (2021)", "type": "generation"}, {"task": "claim_optimization_claim_revisions", "skill": "argument_generation", "title": "Claim Optimization", "source": "Skitalinskaya et al. (2023)", "type": "generation"}, {"task": "counter_argument_generation_cmv", "skill": "argument_generation", "title": "Counterargument Generation", "source": "Hua and Wang (2018)", "type": "generation"}, {"task": "counter_argument_generation_candela", "skill": "argument_generation", "title": "Counterargument Generation", "source": "Hua et al. (2019)", "type": "generation"}, {"task": "warrant_generation_art", "skill": "argument_generation", "title": "Warrant Generation", "source": "Bhagavatula et al. (2020)", "type": "generation"}, {"task": "warrant_generation_arc", "skill": "argument_generation", "title": "Warrant Generation", "source": "Habernal et al. (2018a)", "type": "generation"}, {"task": "warrant_generation_ideological_debate", "skill": "argument_generation", "title": "Warrant Generation", "source": "Boltužić and Šnajder (2016)", "type": "generation"}, {"task": "warrant_generation_microtext_1", "skill": "argument_generation", "title": "Warrant Generation", "source": "Becker et al. (2020)", "type": "generation"}]};
+const SKILLS = ["Mining", "Perspective", "Quality", "Reasoning", "Generation"];
+const SKILL_KEYS = ["argument_mining", "argument_perspective_assessment", "argument_quality_assessment",
+                    "argument_reasoning", "argument_generation"];
+const SKILL_FULL = ["Argument Mining", "Argument Perspective Assessment", "Argument Quality Assessment",
+                    "Argument Reasoning", "Argument Generation"];
+const SETUP_NAME = {zero_shot: "Zero-shot", few_shot: "Few-shot", cot: "CoT"};
+const fmt = v => (v == null ? "–" : v.toFixed(3));
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+
+/* ---------- tabs ---------- */
+const tabs = document.querySelectorAll("nav.tabs button");
+tabs.forEach(b => b.addEventListener("click", () => {
+  tabs.forEach(x => x.setAttribute("aria-selected", x === b));
+  document.querySelectorAll(".panel").forEach(p => p.hidden = p.id !== "panel-" + b.dataset.tab);
+}));
+function segment(id, onPick) {
+  const seg = document.getElementById(id);
+  seg.addEventListener("click", e => {
+    const b = e.target.closest("button"); if (!b) return;
+    seg.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b));
+    onPick(b);
+  });
+}
+
+/* ---------- prompting ---------- */
+let pState = {setup: "best", sort: 5, dir: -1};
+
+function promptingRows() {
+  const rows = [];
+  for (const m of DATA.prompting) {
+    let setup = pState.setup;
+    if (setup === "best") {
+      setup = Object.keys(m.results).reduce((a, b) => (m.results[b][5] > m.results[a][5] ? b : a));
+    }
+    const r = m.results[setup]; if (!r) continue;
+    rows.push({m, setup, scores: r});
+  }
+  const k = pState.sort;
+  rows.sort((a, b) => k === "model" ? pState.dir * a.m.model.localeCompare(b.m.model)
+                                    : pState.dir * (a.scores[k] - b.scores[k]));
+  return rows;
+}
+
+function renderPrompting() {
+  const rows = promptingRows();
+  const max = rows.length > 1 ? [0, 1, 2, 3, 4, 5].map(i => Math.max(...rows.map(r => r.scores[i]))) : [];
+  const arrow = k => (pState.sort === k ? `<span class="arrow">${pState.dir < 0 ? "↓" : "↑"}</span>` : "");
+  let h = `<thead><tr><th class="l">#</th><th class="l sortable" data-k="model">Model${arrow("model")}</th>`;
+  if (pState.setup === "best") h += `<th class="l">Setup</th>`;
+  SKILLS.forEach((s, i) => h += `<th class="sortable" data-k="${i}">${s}${arrow(i)}</th>`);
+  h += `<th class="sortable" data-k="5">Macro${arrow(5)}</th></tr></thead><tbody>`;
+  // rank by macro, independent of the current sort
+  const byMacro = [...rows].sort((a, b) => b.scores[5] - a.scores[5]);
+  rows.forEach(r => {
+    const rank = byMacro.indexOf(r) + 1;
+    const closed = r.m.access === "closed" ? `<span class="tag closed">closed</span>` : "";
+    h += `<tr><td class="rank l">${rank}</td><td class="model l">${esc(r.m.model)}${closed}<small>${esc(r.m.params)}</small></td>`;
+    if (pState.setup === "best") h += `<td class="l">${SETUP_NAME[r.setup]}</td>`;
+    for (let i = 0; i < 5; i++) h += `<td class="${r.scores[i] === max[i] ? "best" : ""}">${fmt(r.scores[i])}</td>`;
+    const pct = Math.max(0, Math.min(1, r.scores[5])) * 100;
+    h += `<td class="macro ${r.scores[5] === max[5] ? "best" : ""}"><div class="barcell"><span class="bar"><i style="width:${pct}%"></i></span>${fmt(r.scores[5])}</div></td></tr>`;
+  });
+  const t = document.getElementById("prompting-table");
+  t.innerHTML = h + "</tbody>";
+  t.querySelectorAll("th.sortable").forEach(th => th.addEventListener("click", () => {
+    const k = th.dataset.k === "model" ? "model" : +th.dataset.k;
+    pState.dir = pState.sort === k ? -pState.dir : (k === "model" ? 1 : -1);
+    pState.sort = k; renderPrompting();
+  }));
+}
+segment("setup-seg", b => { pState.setup = b.dataset.setup; renderPrompting(); });
+
+
+/* ---------- per-task ---------- */
+const withTasks = DATA.prompting.filter(m => m.tasks && Object.keys(m.tasks).length);
+let tState = {run: 0};
+if (!withTasks.length) {
+  document.getElementById("pertask-tab").hidden = true;
+} else {
+  const sel = document.getElementById("pt-run");
+  sel.innerHTML = withTasks.map((m, i) => `<option value="${i}">${esc(m.model)}</option>`).join("");
+  sel.addEventListener("change", () => { tState.run = +sel.value; renderPerTask(); });
+}
+function renderPerTask() {
+  if (!withTasks.length) return;
+  const m = withTasks[tState.run];
+  const scores = (m.tasks[tState.setup] || {});
+  const typeName = {classification: "Macro F1", segmentation: "Span F1", generation: "BERTScore"};
+  let h = `<thead><tr><th class="l">Task</th><th class="l">Dataset</th><th class="l">Metric</th>`;
+  Object.keys(SETUP_NAME).forEach(s => h += `<th>${SETUP_NAME[s]}</th>`);
+  h += `</tr></thead><tbody>`;
+  SKILL_KEYS.forEach((sk, i) => {
+    const rows = DATA.tasks.filter(t => t.skill === sk && Object.values(m.tasks).some(d => d[t.task] != null));
+    if (!rows.length) return;
+    const avg = Object.keys(SETUP_NAME).map(s => m.results[s] ? fmt(m.results[s][i]) : "–");
+    h += `<tr class="skill-row"><td colspan="3">${SKILL_FULL[i]} · ${rows.length} tasks</td>${avg.map(a => `<td style="text-align:right">${a}</td>`).join("")}</tr>`;
+    rows.forEach(t => {
+      const vals = Object.keys(SETUP_NAME).map(s => (m.tasks[s] || {})[t.task]);
+      const best = Math.max(...vals.filter(v => v != null));
+      h += `<tr><td class="l">${esc(t.title)}</td><td class="l">${esc(t.source)}</td><td class="l">${typeName[t.type]}</td>`;
+      vals.forEach(v => h += `<td class="${v === best ? "best" : ""}">${fmt(v)}</td>`);
+      h += `</tr>`;
+    });
+  });
+  document.getElementById("pertask-table").innerHTML = h + "</tbody>";
+}
+
+/* ---------- about ---------- */
+document.getElementById("skill-list").innerHTML = SKILL_KEYS.map((sk, i) => {
+  const ts = DATA.tasks.filter(t => t.skill === sk);
+  const names = [...new Set(ts.map(t => t.title))].join(", ");
+  return `<li><b>${SKILL_FULL[i]}</b> (${ts.length} tasks): ${esc(names)}.</li>`;
+}).join("");
+document.getElementById("copy-bib").addEventListener("click", async e => {
+  try { await navigator.clipboard.writeText(document.getElementById("bibtex").textContent); e.target.textContent = "Copied"; }
+  catch (_) { e.target.textContent = "Select and copy"; }
+  setTimeout(() => e.target.textContent = "Copy", 1500);
+});
+
+renderPrompting(); renderPerTask();
+</script>
+</body>
+</html>
