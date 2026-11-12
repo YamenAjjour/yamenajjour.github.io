@@ -23,6 +23,13 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/publications/";
           },
+        },{id: "nav-projects",
+          title: "projects",
+          description: "Benchmarks, datasets, and tools from my research.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/projects/";
+          },
         },{id: "nav-repositories",
           title: "repositories",
           description: "",
@@ -90,7 +97,12 @@ ninja.data = [{
           section: "News",},{id: "news-our-paper-argbench-benchmarking-llms-on-computational-argumentation-tasks-has-been-accepted-at-acl2026-findings",
           title: 'Our paper “ArgBench: Benchmarking LLMs on Computational Argumentation Tasks” has been accepted at...',
           description: "",
-          section: "News",},{
+          section: "News",},{id: "projects-argbench",
+          title: 'ArgBench',
+          description: "A benchmark of 46 computational argumentation tasks for evaluating LLMs.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/argbench/";
+            },},{
         id: 'social-github',
         title: 'GitHub',
         section: 'Socials',
