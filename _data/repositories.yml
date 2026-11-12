@@ -1,7 +1,7 @@
 github_users:
 
 
-repo_description_lines_max: 1
+repo_description_lines_max: 2
 
 github_repos:
   - webis-de/priming-strategies-for-stance-classification
