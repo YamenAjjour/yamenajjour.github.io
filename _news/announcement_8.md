@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-I will be co-organizing a workshop on Emotion and Manipulation in Argumentation together with Steffen Eger and Yanran Chen.
+I'm co-organizing a workshop on Emotion and Manipulation in Argumentation with Steffen Eger and Yanran Chen.
