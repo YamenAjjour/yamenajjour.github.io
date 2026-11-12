@@ -16,6 +16,18 @@ module Jekyll
 
     CACHE = {}
 
+    # GitHub's linguist colors for the languages used on this site; others fall back to the theme color.
+    LANGUAGE_COLORS = {
+      "C++" => "#f34b7d",
+      "Java" => "#b07219",
+      "JavaScript" => "#f1e05a",
+      "Jupyter Notebook" => "#DA5B0B",
+      "Python" => "#3572A5",
+      "R" => "#198CE7",
+      "Shell" => "#89e051",
+      "TypeScript" => "#3178c6",
+    }.freeze
+
     def generate(site)
       repos = site.data.dig("repositories", "github_repos") || []
       site.data["github_repo_meta"] = repos.each_with_object({}) do |repo, meta|
@@ -47,6 +59,7 @@ module Jekyll
       {
         "description" => data["description"],
         "language" => data["language"],
+        "language_color" => LANGUAGE_COLORS[data["language"]],
         "stars" => data["stargazers_count"],
         "forks" => data["forks_count"],
       }

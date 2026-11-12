@@ -1,43 +1,31 @@
-{% assign repo_url = include.repository | split: '/' %}
-{% if site.data.repositories.github_users contains repo_url.first %}
-  {% assign show_owner = false %}
-{% else %}
-  {% assign show_owner = true %}
-{% endif %}
-
-{% if site.data.repositories.repo_description_lines_max %}
-  {% assign max_lines = site.data.repositories.repo_description_lines_max %}
-{% else %}
-  {% assign max_lines = 2 %}
-{% endif %}
-
 {% comment %} Metadata is fetched at build time by _plugins/github-repo-metadata.rb {% endcomment %}
+{% assign repo_url = include.repository | split: '/' %}
 {% assign meta = site.data.github_repo_meta[include.repository] %}
 
-<div class="repo p-2">
-  <a class="repo-card" href="https://github.com/{{ include.repository }}">
-    <div class="repo-card-title">
-      <i class="fa-solid fa-book-bookmark"></i>
-      <span>
-        {%- if show_owner -%}{{ repo_url[0] }}/{%- endif -%}
-        <strong>{{ repo_url[1] }}</strong>
-      </span>
-    </div>
-    {% if meta.description %}
-      <p class="repo-card-description" style="-webkit-line-clamp: {{ max_lines }}; line-clamp: {{ max_lines }};">
-        {{ meta.description | escape }}
-      </p>
-    {% endif %}
-    <div class="repo-card-stats">
+<a
+  class="repo-tile"
+  href="https://github.com/{{ include.repository }}"
+  {% if meta.description %}
+    title="{{ meta.description | escape }}"
+  {% endif %}
+>
+  <span class="repo-tile-name">{{ repo_url[1] }}</span>
+  {% if meta.language or meta.stars > 0 %}
+    <span class="repo-tile-meta">
       {% if meta.language %}
-        <span><span class="repo-card-language-dot"></span>{{ meta.language }}</span>
+        <span>
+          <span
+            class="repo-tile-language-dot"
+            {% if meta.language_color %}
+              style="background-color: {{ meta.language_color }}"
+            {% endif %}
+          ></span>
+          {{- meta.language -}}
+        </span>
       {% endif %}
-      {% if meta.stars %}
+      {% if meta.stars > 0 %}
         <span><i class="fa-regular fa-star"></i> {{ meta.stars }}</span>
       {% endif %}
-      {% if meta.forks %}
-        <span><i class="fa-solid fa-code-fork"></i> {{ meta.forks }}</span>
-      {% endif %}
-    </div>
-  </a>
-</div>
+    </span>
+  {% endif %}
+</a>
