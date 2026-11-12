@@ -5,6 +5,7 @@ description: A benchmark of 46 computational argumentation tasks for evaluating 
 img: assets/img/projects/argbench.png
 importance: 1
 github: https://github.com/webis-de/argbench
+redirect: /argbench/
 ---
 
 ArgBench is a benchmark for evaluating large language models on computational argumentation.
