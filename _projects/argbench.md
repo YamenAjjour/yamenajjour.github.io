@@ -36,6 +36,7 @@ and its overall score is the average over the five skills.
 
 #### Citation
 
+{% raw %}
 ```bibtex
 @inproceedings{ajjour-etal-2026-argbench,
   title     = {{ArgBench}: Benchmarking {LLMs} on Computational Argumentation Tasks},
@@ -46,3 +47,4 @@ and its overall score is the average over the five skills.
   url       = {https://aclanthology.org/2026.findings-acl.1099/}
 }
 ```
+{% endraw %}
