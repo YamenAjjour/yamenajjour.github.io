@@ -1,117 +1,97 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ArgBench Leaderboard</title>
-<meta name="description" content="Leaderboard of LLMs on ArgBench, a benchmark of 46 computational argumentation tasks across five skills.">
+---
+layout: page
+title: ArgBench Leaderboard
+permalink: /argbench/
+---
+
+{% raw %}
 <style>
-:root {
-  --bg: #fbfbfa; --surface: #ffffff; --surface-2: #f3f3f1; --text: #1c1d1f; --muted: #62656b;
-  --border: #e3e3df; --accent: #2f5bd3; --accent-soft: #e8eefc; --bar: #c9d6f7; --best: #1d4ed8;
-  --paper: #eef0f3; --paper-text: #4b5160; --run: #e7f6ee; --run-text: #1d7a4a;
-  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+.argbench {
+  --ab-surface: var(--global-card-bg-color);
+  --ab-surface-2: color-mix(in srgb, var(--global-text-color) 5%, var(--global-card-bg-color));
+  --ab-text: var(--global-text-color);
+  --ab-muted: var(--global-text-color-light);
+  --ab-border: var(--global-divider-color);
+  --ab-accent: var(--global-theme-color);
+  --ab-accent-soft: color-mix(in srgb, var(--global-theme-color) 14%, transparent);
+  --ab-bar: color-mix(in srgb, var(--global-theme-color) 35%, transparent);
+  --ab-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #121316; --surface: #191b1f; --surface-2: #20232a; --text: #e8e9ec; --muted: #9a9ea8;
-    --border: #2c3038; --accent: #7ea2ff; --accent-soft: #1f2a44; --bar: #2c3d68; --best: #a9c1ff;
-    --paper: #252932; --paper-text: #b3b9c6; --run: #17332a; --run-text: #74d3a1;
-  }
+.argbench h2 { font-size: 1.35rem; margin: 0 0 0.4rem; }
+.argbench h3 { font-size: 1.1rem; margin: 1.5rem 0 0.5rem; }
+.argbench .lede { color: var(--ab-muted); max-width: 720px; margin: 0 0 1rem; }
+.argbench .links { display: flex; gap: 8px; flex-wrap: wrap; }
+.argbench .links a {
+  color: var(--ab-text); border: 1px solid var(--ab-border); background: var(--ab-surface);
+  padding: 6px 12px; border-radius: 8px; font-size: 0.9rem;
 }
-:root[data-theme="dark"] {
-  --bg: #121316; --surface: #191b1f; --surface-2: #20232a; --text: #e8e9ec; --muted: #9a9ea8;
-  --border: #2c3038; --accent: #7ea2ff; --accent-soft: #1f2a44; --bar: #2c3d68; --best: #a9c1ff;
-  --paper: #252932; --paper-text: #b3b9c6; --run: #17332a; --run-text: #74d3a1;
-}
-* { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
-body {
-  margin: 0; background: var(--bg); color: var(--text);
-  font: 15px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-}
-.wrap { max-width: 1080px; margin: 0 auto; padding: 0 16px; }
-header { padding: 48px 0 24px; }
-h1 { font-size: 34px; line-height: 1.15; margin: 0 0 10px; letter-spacing: -0.02em; }
-h2 { font-size: 20px; margin: 0 0 6px; letter-spacing: -0.01em; }
-h3 { font-size: 15px; margin: 22px 0 8px; }
-.lede { color: var(--muted); max-width: 720px; margin: 0 0 18px; font-size: 16px; }
-.links { display: flex; gap: 8px; flex-wrap: wrap; }
-.links a {
-  color: var(--text); text-decoration: none; border: 1px solid var(--border); background: var(--surface);
-  padding: 6px 12px; border-radius: 8px; font-size: 14px;
-}
-.links a:hover { border-color: var(--accent); color: var(--accent); }
-.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border);
-  border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin: 26px 0 8px; }
-.stat { background: var(--surface); padding: 14px 16px; }
-.stat b { display: block; font-size: 22px; font-variant-numeric: tabular-nums; }
-.stat span { color: var(--muted); font-size: 13px; }
-nav.tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--border); margin: 24px 0 20px; overflow-x: auto; }
-nav.tabs button {
-  background: none; border: 0; border-bottom: 2px solid transparent; color: var(--muted);
+.argbench .links a:hover { border-color: var(--ab-accent); color: var(--ab-accent); text-decoration: none; }
+.argbench .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--ab-border);
+  border: 1px solid var(--ab-border); border-radius: 10px; overflow: hidden; margin: 1.5rem 0 0.5rem; }
+.argbench .stat { background: var(--ab-surface); padding: 12px 16px; }
+.argbench .stat b { display: block; font-size: 1.4rem; font-weight: 500; font-variant-numeric: tabular-nums; }
+.argbench .stat span { color: var(--ab-muted); font-size: 0.85rem; }
+.argbench .tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--ab-border); margin: 1.5rem 0 1.25rem; overflow-x: auto; }
+.argbench .tabs button {
+  background: none; border: 0; border-bottom: 2px solid transparent; color: var(--ab-muted);
   padding: 10px 12px; font: inherit; font-weight: 500; cursor: pointer; white-space: nowrap;
 }
-nav.tabs button[aria-selected="true"] { color: var(--text); border-bottom-color: var(--accent); }
-.panel[hidden] { display: none; }
-.controls { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; margin: 14px 0; }
-.seg { display: inline-flex; background: var(--surface-2); border-radius: 9px; padding: 3px; flex-wrap: wrap; }
-.seg button {
-  border: 0; background: none; color: var(--muted); font: inherit; font-size: 14px;
+.argbench .tabs button[aria-selected="true"] { color: var(--ab-accent); border-bottom-color: var(--ab-accent); }
+.argbench .panel[hidden] { display: none; }
+.argbench .controls { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; margin: 14px 0; }
+.argbench .seg { display: inline-flex; background: var(--ab-surface-2); border-radius: 9px; padding: 3px; flex-wrap: wrap; }
+.argbench .seg button {
+  border: 0; background: none; color: var(--ab-muted); font: inherit; font-size: 0.9rem;
   padding: 5px 12px; border-radius: 7px; cursor: pointer;
 }
-.seg button[aria-pressed="true"] { background: var(--surface); color: var(--text); box-shadow: 0 1px 2px rgba(0,0,0,.08); }
-label.check { display: inline-flex; gap: 6px; align-items: center; color: var(--muted); font-size: 14px; cursor: pointer; }
-select { font: inherit; font-size: 14px; padding: 5px 8px; border-radius: 7px; border: 1px solid var(--border);
-  background: var(--surface); color: var(--text); }
-.table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); }
-table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
-th, td { padding: 9px 10px; text-align: right; white-space: nowrap; border-bottom: 1px solid var(--border); }
-tr:last-child td { border-bottom: 0; }
-th { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); font-weight: 600;
-  background: var(--surface-2); position: relative; }
-th.sortable { cursor: pointer; user-select: none; }
-th.sortable:hover { color: var(--text); }
-th .arrow { opacity: .8; margin-left: 3px; }
-th.l, td.l { text-align: left; }
-td.rank { color: var(--muted); width: 1%; }
-td.model { font-weight: 600; }
-td.model small { display: block; font-weight: 400; color: var(--muted); font-size: 12px; }
-td.best { color: var(--best); font-weight: 700; }
-td.macro { font-weight: 700; }
-.barcell { display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
-.bar { width: 44px; height: 6px; background: var(--surface-2); border-radius: 3px; overflow: hidden; }
-.bar i { display: block; height: 100%; background: var(--bar); }
-.best .bar i, td.macro.best .bar i { background: var(--accent); }
-.tag { display: inline-block; font-size: 11px; font-weight: 600; padding: 1px 7px; border-radius: 999px; margin-left: 6px; vertical-align: 1px; }
-.tag.paper { background: var(--paper); color: var(--paper-text); }
-.tag.run { background: var(--run); color: var(--run-text); }
-.tag.closed { background: var(--accent-soft); color: var(--accent); }
-.skill-row td { background: var(--surface-2); font-weight: 600; text-align: left; font-size: 13px; }
-.note { color: var(--muted); font-size: 13.5px; margin: 10px 2px 0; }
-.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.card { border: 1px solid var(--border); background: var(--surface); border-radius: 10px; padding: 16px 18px; }
-.card p, .card ul { margin: 6px 0 0; color: var(--muted); font-size: 14px; }
-.card ul { padding-left: 18px; }
-pre { background: var(--surface-2); border-radius: 8px; padding: 14px; overflow-x: auto; font: 12.5px/1.5 var(--mono); margin: 0; }
-.copy { float: right; font: inherit; font-size: 13px; border: 1px solid var(--border); background: var(--surface);
-  color: var(--text); border-radius: 7px; padding: 4px 10px; cursor: pointer; }
-footer { color: var(--muted); font-size: 13px; padding: 40px 0 48px; }
-a { color: var(--accent); }
+.argbench .seg button[aria-pressed="true"] { background: var(--ab-surface); color: var(--ab-accent); box-shadow: 0 1px 2px rgba(0,0,0,.12); }
+.argbench select { font: inherit; font-size: 0.9rem; padding: 5px 8px; border-radius: 7px; border: 1px solid var(--ab-border);
+  background: var(--ab-surface); color: var(--ab-text); }
+.argbench .table-wrap { overflow-x: auto; border: 1px solid var(--ab-border); border-radius: 10px; background: var(--ab-surface); }
+.argbench table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+.argbench th, .argbench td { padding: 9px 8px; font-size: 0.95rem; text-align: right; white-space: nowrap; border-bottom: 1px solid var(--ab-border); }
+.argbench tr:last-child td { border-bottom: 0; }
+.argbench th { font-size: 0.75rem; text-transform: uppercase; letter-spacing: .04em; color: var(--ab-muted); font-weight: 600;
+  background: var(--ab-surface-2); position: relative; }
+.argbench th.sortable { cursor: pointer; user-select: none; }
+.argbench th.sortable:hover { color: var(--ab-text); }
+.argbench th .arrow { opacity: .8; margin-left: 3px; }
+.argbench th.l, .argbench td.l { text-align: left; }
+.argbench td.rank { color: var(--ab-muted); width: 1%; }
+.argbench td.model { font-weight: 500; }
+.argbench td.model small { display: block; font-weight: 400; color: var(--ab-muted); font-size: 0.75rem; }
+.argbench td.best { color: var(--ab-accent); font-weight: 700; }
+.argbench td.macro { font-weight: 700; }
+.argbench .barcell { display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
+.argbench .bar { width: 44px; height: 6px; background: var(--ab-surface-2); border-radius: 3px; overflow: hidden; }
+.argbench .bar i { display: block; height: 100%; background: var(--ab-bar); }
+.argbench .best .bar i { background: var(--ab-accent); }
+.argbench .tag { display: inline-block; font-size: 0.7rem; font-weight: 600; padding: 1px 7px; border-radius: 999px; margin-left: 6px; vertical-align: 1px; }
+.argbench .tag.paper { background: var(--ab-surface-2); color: var(--ab-muted); }
+.argbench .tag.run { background: color-mix(in srgb, #2e9e5b 16%, transparent); color: #2e9e5b; }
+.argbench .tag.closed { background: var(--ab-accent-soft); color: var(--ab-accent); }
+.argbench .skill-row td { background: var(--ab-surface-2); font-weight: 600; text-align: left; font-size: 0.85rem; }
+.argbench .ab-note { color: var(--ab-muted); font-size: 0.9rem; margin: 10px 2px 0; }
+.argbench .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.argbench .ab-card { border: 1px solid var(--ab-border); background: var(--ab-surface); border-radius: 10px; padding: 16px 18px; }
+.argbench .ab-card p, .argbench .ab-card ul { margin: 6px 0 0; color: var(--ab-muted); font-size: 0.9rem; }
+.argbench .ab-card ul { padding-left: 18px; }
+.argbench pre { color: var(--ab-text); background: var(--ab-surface-2); border-radius: 8px; padding: 14px; overflow-x: auto;
+  font: 0.8rem/1.5 var(--ab-mono); margin: 0; }
+.argbench .ab-copy { float: right; font: inherit; font-size: 0.8rem; border: 1px solid var(--ab-border); background: var(--ab-surface);
+  color: var(--ab-text); border-radius: 7px; padding: 4px 10px; cursor: pointer; }
+.argbench .ab-footer { color: var(--ab-muted); font-size: 0.85rem; margin: 2.5rem 0 0; }
 @media (max-width: 720px) {
-  header { padding-top: 32px; }
-  h1 { font-size: 27px; }
-  .stats { grid-template-columns: repeat(2, 1fr); }
-  .grid2 { grid-template-columns: 1fr; }
-  th, td { padding: 8px 9px; }
-  .bar { display: none; }
+  .argbench .stats { grid-template-columns: repeat(2, 1fr); }
+  .argbench .grid2 { grid-template-columns: 1fr; }
+  .argbench th, .argbench td { padding: 8px 9px; }
+  .argbench .bar { display: none; }
 }
 </style>
-</head>
-<body>
-<div class="wrap">
-  <header>
-    <h1>ArgBench Leaderboard</h1>
+
+<div class="argbench">
+
+  <div class="ab-header">
     <p class="lede">How well do large language models handle computational argumentation? ArgBench evaluates LLMs on
       46 tasks from 33 datasets, grouped into five skills: mining arguments, assessing their perspective and quality,
       reasoning about them, and generating them.</p>
@@ -126,17 +106,17 @@ a { color: var(--accent); }
       <div class="stat"><b>5</b><span>skills</span></div>
       <div class="stat"><b>9</b><span>genres</span></div>
     </div>
-  </header>
+  </div>
 
-  <nav class="tabs" role="tablist">
+  <div class="tabs" role="tablist">
     <button role="tab" data-tab="prompting" aria-selected="true">Prompting</button>
     <button role="tab" data-tab="pertask" aria-selected="false" id="pertask-tab">Per-task results</button>
     <button role="tab" data-tab="about" aria-selected="false">About the benchmark</button>
-  </nav>
+  </div>
 
   <section class="panel" id="panel-prompting">
     <h2>Prompting</h2>
-    <p class="note" style="margin-top:0">Models are prompted with each task's definition, without fine-tuning. Skill scores
+    <p class="ab-note" style="margin-top:0">Models are prompted with each task's definition, without fine-tuning. Skill scores
       average the tasks of a skill; <b>Macro</b> averages the five skills. Click a column to sort.</p>
     <div class="controls">
       <div class="seg" id="setup-seg">
@@ -151,7 +131,7 @@ a { color: var(--accent); }
 
   <section class="panel" id="panel-pertask" hidden>
     <h2>Per-task results</h2>
-    <p class="note" style="margin-top:0">Scores on every task, per prompting setup. Best setup per task in blue.</p>
+    <p class="ab-note" style="margin-top:0">Scores on every task, per prompting setup. The best setup per task is highlighted.</p>
     <div class="controls">
       <select id="pt-run" aria-label="Run"></select>
     </div>
@@ -160,8 +140,8 @@ a { color: var(--accent); }
 
   <section class="panel" id="panel-about" hidden>
     <div class="grid2">
-      <div class="card"><h2>Skills</h2><ul id="skill-list"></ul></div>
-      <div class="card"><h2>Evaluation</h2>
+      <div class="ab-card"><h2>Skills</h2><ul id="skill-list"></ul></div>
+      <div class="ab-card"><h2>Evaluation</h2>
         <ul>
           <li><b>Classification</b>: macro F1.</li>
           <li><b>Segmentation</b>: F1 of exact span matches, macro-averaged over positive span labels.</li>
@@ -170,7 +150,7 @@ a { color: var(--accent); }
           <li>Test sets are capped at 1,000 instances per task.</li>
         </ul>
       </div>
-      <div class="card"><h2>Prompting setups</h2>
+      <div class="ab-card"><h2>Prompting setups</h2>
         <ul>
           <li><b>Zero-shot</b>: task definition followed by the instance.</li>
           <li><b>Few-shot</b>: four training examples added after the definition.</li>
@@ -180,7 +160,7 @@ a { color: var(--accent); }
       </div>
     </div>
     <h3>Citation</h3>
-    <div class="card"><button class="copy" id="copy-bib">Copy</button>
+    <div class="ab-card"><button class="ab-copy" id="copy-bib">Copy</button>
 <pre id="bibtex">@inproceedings{ajjour-etal-2026-argbench,
   title     = {{ArgBench}: Benchmarking {LLMs} on Computational Argumentation Tasks},
   author    = {Ajjour, Yamen and Quensel, Carlotta and Lipka, Nedim and Wachsmuth, Henning},
@@ -191,7 +171,7 @@ a { color: var(--accent); }
 }</pre></div>
   </section>
 
-  <footer>ArgBench · Ajjour, Quensel, Lipka, and Wachsmuth · Findings of ACL 2026</footer>
+  <p class="ab-footer">ArgBench · Ajjour, Quensel, Lipka, and Wachsmuth · Findings of ACL 2026</p>
 </div>
 
 <script>
@@ -206,10 +186,10 @@ const fmt = v => (v == null ? "–" : v.toFixed(3));
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
 
 /* ---------- tabs ---------- */
-const tabs = document.querySelectorAll("nav.tabs button");
+const tabs = document.querySelectorAll(".argbench .tabs button");
 tabs.forEach(b => b.addEventListener("click", () => {
   tabs.forEach(x => x.setAttribute("aria-selected", x === b));
-  document.querySelectorAll(".panel").forEach(p => p.hidden = p.id !== "panel-" + b.dataset.tab);
+  document.querySelectorAll(".argbench .panel").forEach(p => p.hidden = p.id !== "panel-" + b.dataset.tab);
 }));
 function segment(id, onPick) {
   const seg = document.getElementById(id);
@@ -317,5 +297,4 @@ document.getElementById("copy-bib").addEventListener("click", async e => {
 
 renderPrompting(); renderPerTask();
 </script>
-</body>
-</html>
+{% endraw %}
