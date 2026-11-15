@@ -1,0 +1,38 @@
+---
+layout: page
+---
+{% comment %}
+  A topic page of the Persuasive Ads gallery. Each topic is a file in persuasive-ads/ with `layout: ad_topic`;
+  the gallery at /persuasive-ads/ lists every page that uses this layout.
+{% endcomment %}
+<p class="pa-back">
+  <a href="{{ '/persuasive-ads/' | relative_url }}"><i class="fa-solid fa-arrow-left"></i> All topics</a>
+</p>
+
+{{ content }}
+
+{% if page.videos and page.videos.size > 0 %}
+  <div class="pa-videos">
+    {% for video in page.videos %}
+      {% include persuasive_ads/video_card.liquid video=video %}
+    {% endfor %}
+  </div>
+{% else %}
+  <p>No videos for this topic yet.</p>
+{% endif %}
+
+<script>
+  /* Replace a YouTube placeholder with the real player on click, so YouTube is only contacted after the visitor asks for it. */
+  document.addEventListener('click', function (event) {
+    var button = event.target.closest('[data-pa-youtube]');
+    if (!button) return;
+    var iframe = document.createElement('iframe');
+    iframe.src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(button.dataset.paYoutube) + '?autoplay=1&rel=0';
+    iframe.title = button.dataset.paTitle || 'YouTube video';
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+    iframe.allowFullscreen = true;
+    button.replaceWith(iframe);
+    iframe.focus();
+  });
+</script>
