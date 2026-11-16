@@ -24,8 +24,8 @@
   <rect width="800" height="480" fill="#fafafa"/>
 
   <g font-family="Helvetica, Arial, sans-serif">
-    <text x="32" y="74" font-size="34" font-weight="700" fill="#1f1f1f">Persuasive Ads</text>
-    <text x="32" y="110" font-size="18" fill="#5f6368">Video ads that try to change what people think or do,</text>
+    <text x="32" y="74" font-size="34" font-weight="700" fill="#1f1f1f">Persuasive Video</text>
+    <text x="32" y="110" font-size="18" fill="#5f6368">Videos that try to change what people think or do,</text>
     <text x="32" y="134" font-size="18" fill="#5f6368">grouped by topic.</text>
   </g>
 

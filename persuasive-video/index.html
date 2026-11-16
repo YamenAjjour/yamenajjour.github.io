@@ -1,0 +1,35 @@
+---
+layout: page
+title: Persuasive Video
+permalink: /persuasive-video/
+description: Videos that try to change what people think or do, grouped by topic.
+---
+
+{% comment %}
+  Lists every topic page (files in persuasive-video/ with `layout: video_topic`), sorted by their `order` field.
+{% endcomment %}
+{% assign topics = site.pages | where: "layout", "video_topic" | sort: "order" %}
+
+<div class="pv-topics">
+  {% for topic in topics %}
+    {% assign video_count = topic.videos | size %}
+    <a class="pv-topic" href="{{ topic.url | relative_url }}">
+      <div class="pv-topic-cover"{% if topic.color %} style="--pv-topic-color: {{ topic.color }}"{% endif %}>
+        {% if topic.image %}
+          <img src="{{ topic.image | relative_url }}" alt="" loading="lazy">
+        {% else %}
+          <i class="{{ topic.icon | default: 'fa-solid fa-film' }}" aria-hidden="true"></i>
+        {% endif %}
+      </div>
+      <div class="pv-topic-body">
+        <h2 class="pv-topic-title">{{ topic.title }}</h2>
+        {% if topic.description %}
+          <p class="pv-topic-desc">{{ topic.description }}</p>
+        {% endif %}
+        <span class="pv-topic-count">
+          {% if video_count == 0 %}Coming soon{% else %}{{ video_count }} video{% if video_count != 1 %}s{% endif %}{% endif %}
+        </span>
+      </div>
+    </a>
+  {% endfor %}
+</div>

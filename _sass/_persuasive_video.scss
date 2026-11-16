@@ -1,15 +1,15 @@
-// Persuasive Ads: topic gallery (/persuasive-ads/) and topic pages (layout: ad_topic)
+// Persuasive Video: topic gallery (/persuasive-video/) and topic pages (layout: video_topic)
 
 // Topic gallery
 
-.pa-topics {
+.pv-topics {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
   gap: 1rem;
   margin-top: 0.5rem;
 }
 
-.pa-topic {
+.pv-topic {
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -30,13 +30,13 @@
   }
 }
 
-.pa-topic-cover {
-  --pa-topic-color: var(--global-theme-color);
+.pv-topic-cover {
+  --pv-topic-color: var(--global-theme-color);
   display: flex;
   align-items: center;
   justify-content: center;
   aspect-ratio: 16 / 9;
-  background: linear-gradient(135deg, var(--pa-topic-color), color-mix(in srgb, var(--pa-topic-color) 55%, #000));
+  background: linear-gradient(135deg, var(--pv-topic-color), color-mix(in srgb, var(--pv-topic-color) 55%, #000));
   color: #fff;
   font-size: 2.75rem;
 
@@ -47,7 +47,7 @@
   }
 }
 
-.pa-topic-body {
+.pv-topic-body {
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -55,20 +55,20 @@
   padding: 0.85rem 1rem 1rem;
 }
 
-.pa-topic-title {
+.pv-topic-title {
   margin: 0;
   font-size: 1.1rem;
   font-weight: 500;
   color: var(--global-theme-color);
 }
 
-.pa-topic-desc {
+.pv-topic-desc {
   margin: 0;
   font-size: 0.9rem;
   color: var(--global-text-color-light);
 }
 
-.pa-topic-count {
+.pv-topic-count {
   margin-top: auto;
   padding-top: 0.25rem;
   font-size: 0.8rem;
@@ -77,19 +77,19 @@
 
 // Topic page
 
-.pa-back {
+.pv-back {
   margin-bottom: 1.25rem;
   font-size: 0.9rem;
 }
 
-.pa-videos {
+.pv-videos {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
   gap: 1.5rem;
   align-items: start;
 }
 
-.pa-video {
+.pv-video {
   margin: 0;
   overflow: hidden;
   border: 1px solid var(--global-divider-color);
@@ -97,12 +97,12 @@
   background-color: var(--global-card-bg-color);
 }
 
-.pa-player {
+.pv-player {
   background-color: #000;
 
   > video,
   > iframe,
-  > .pa-yt {
+  > .pv-yt {
     display: block;
     width: 100%;
     aspect-ratio: 16 / 9;
@@ -111,10 +111,10 @@
 }
 
 // Vertical videos (YouTube Shorts, 9:16 clips): sized by height, centred on black
-.pa-player--vertical {
+.pv-player--vertical {
   > video,
   > iframe,
-  > .pa-yt {
+  > .pv-yt {
     width: auto;
     max-width: 100%;
     height: min(640px, 75vh);
@@ -124,7 +124,7 @@
 }
 
 // YouTube "click to load" placeholder: nothing is requested from YouTube until it is clicked
-.pa-yt {
+.pv-yt {
   position: relative;
   overflow: hidden;
   padding: 0;
@@ -141,18 +141,18 @@
   }
 
   // The theme colours every span/div directly, so the white has to be set on the children too
-  .pa-play,
-  .pa-yt-note {
+  .pv-play,
+  .pv-yt-note {
     color: #fff;
   }
 
-  &:hover .pa-play,
-  &:focus-visible .pa-play {
+  &:hover .pv-play,
+  &:focus-visible .pv-play {
     background-color: var(--global-theme-color);
   }
 }
 
-.pa-play {
+.pv-play {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -168,7 +168,7 @@
   transition: background-color 0.15s ease;
 }
 
-.pa-yt-note {
+.pv-yt-note {
   position: absolute;
   right: 0.6rem;
   bottom: 0.5rem;
@@ -178,7 +178,7 @@
   font-size: 0.75rem;
 }
 
-.pa-meta {
+.pv-meta {
   padding: 0.85rem 1rem 1rem;
 
   p {
@@ -191,13 +191,13 @@
   }
 }
 
-.pa-video-title {
+.pv-video-title {
   margin: 0 0 0.35rem;
   font-size: 1.05rem;
   font-weight: 500;
 }
 
-.pa-label {
+.pv-label {
   margin-right: 0.35rem;
   font-size: 0.7rem;
   font-weight: 600;
@@ -206,7 +206,7 @@
   color: var(--global-text-color-light);
 }
 
-.pa-chips {
+.pv-chips {
   display: flex;
   flex-wrap: wrap;
   gap: 0.35rem;
@@ -223,7 +223,7 @@
   }
 }
 
-.pa-meta .pa-source {
+.pv-meta .pv-source {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -236,7 +236,7 @@
   }
 }
 
-.pa-badge {
+.pv-badge {
   padding: 0 0.4rem;
   border: 1px solid var(--global-divider-color);
   border-radius: 4px;

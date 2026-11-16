@@ -1,23 +1,23 @@
 {% comment %}
-  One video on a Persuasive Ads topic page. Called from _layouts/ad_topic.liquid with video=<entry from the page's `videos:` list>.
-  An entry has either `youtube:` (a video ID) or `file:` (a path under assets/). See persuasive-ads/climate-change.md for all fields.
+  One video on a Persuasive Video topic page. Called from _layouts/video_topic.liquid with video=<entry from the page's `videos:` list>.
+  An entry has either `youtube:` (a video ID) or `file:` (a path under assets/). See persuasive-video/climate-change.md for all fields.
 {% endcomment %}
 {% assign v = include.video %}
-<figure class="pa-video">
-  <div class="pa-player{% if v.vertical %} pa-player--vertical{% endif %}">
+<figure class="pv-video">
+  <div class="pv-player{% if v.vertical %} pv-player--vertical{% endif %}">
     {% if v.youtube %}
       <button
         type="button"
-        class="pa-yt"
-        data-pa-youtube="{{ v.youtube | escape }}"
-        data-pa-title="{{ v.title | escape }}"
+        class="pv-yt"
+        data-pv-youtube="{{ v.youtube | escape }}"
+        data-pv-title="{{ v.title | escape }}"
         aria-label="Play {{ v.title | escape }} (loads YouTube)"
       >
         {% if v.poster %}
           <img src="{{ v.poster | relative_url }}" alt="" loading="lazy">
         {% endif %}
-        <span class="pa-play" aria-hidden="true"><i class="fa-solid fa-play"></i></span>
-        <span class="pa-yt-note">Plays from YouTube</span>
+        <span class="pv-play" aria-hidden="true"><i class="fa-solid fa-play"></i></span>
+        <span class="pv-yt-note">Plays from YouTube</span>
       </button>
     {% elsif v.file %}
       {% assign ext = v.file | split: '.' | last | downcase %}
@@ -37,24 +37,24 @@
     {% endif %}
   </div>
 
-  <figcaption class="pa-meta">
-    <h3 class="pa-video-title">{{ v.title }}</h3>
+  <figcaption class="pv-meta">
+    <h3 class="pv-video-title">{{ v.title }}</h3>
     {% if v.description %}
       <p>{{ v.description }}</p>
     {% endif %}
     {% if v.claim %}
-      <p><span class="pa-label">Claim</span>{{ v.claim }}</p>
+      <p><span class="pv-label">Claim</span>{{ v.claim }}</p>
     {% endif %}
     {% if v.strategies %}
-      <ul class="pa-chips" aria-label="Persuasion strategies">
+      <ul class="pv-chips" aria-label="Persuasion strategies">
         {% for strategy in v.strategies %}
           <li>{{ strategy }}</li>
         {% endfor %}
       </ul>
     {% endif %}
     {% if v.ai_generated or v.source %}
-      <p class="pa-source">
-        {% if v.ai_generated %}<span class="pa-badge">AI-generated</span>{% endif %}
+      <p class="pv-source">
+        {% if v.ai_generated %}<span class="pv-badge">AI-generated</span>{% endif %}
         {% if v.source %}<span>{{ v.source }}</span>{% endif %}
       </p>
     {% endif %}
