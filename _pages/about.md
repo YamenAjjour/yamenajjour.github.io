@@ -27,7 +27,7 @@ latest_posts:
 
 Yamen Ajjour is interested in multimodality (particularly speech and text), ethical ai, and ai for science. 
 
-My PhD was on ***Addressing Controversial Topics in Search Engines*** where I worked on 
+My PhD was on ***[Addressing Controversial Topics in Search Engines](https://doi.org/10.25643/bauhaus-universitaet.6403)*** where I worked on 
 
 1. Identifying argumentative questions in web search
 2. Generalizability of argument mining methods across topic and genre
