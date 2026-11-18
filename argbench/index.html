@@ -58,8 +58,8 @@ permalink: /argbench/
 .argbench th .arrow { opacity: .8; margin-left: 3px; }
 .argbench th.l, .argbench td.l { text-align: left; }
 .argbench td.rank { color: var(--ab-muted); width: 1%; }
-.argbench td.model { font-weight: 500; }
-.argbench td.model small { display: block; font-weight: 400; color: var(--ab-muted); font-size: 0.75rem; }
+.argbench td.model { font-weight: 500; white-space: normal; }  /* long names wrap at hyphens */
+.argbench td.model small { display: block; font-weight: 400; color: var(--ab-muted); font-size: 0.75rem; white-space: nowrap; }
 .argbench td.best { color: var(--ab-accent); font-weight: 700; }
 .argbench td.macro { font-weight: 700; }
 .argbench .barcell { display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
