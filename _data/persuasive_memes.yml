@@ -1,0 +1,324 @@
+# Persuasive Memes (/persuasive-video/memes/). Each meme comes from a claim tree:
+# debate statement -> stance -> main claim (the meme's title) -> premises (one GIF frame each: caption over a generated picture).
+# Pictures: Qwen-Image-2.1. Frames and GIFs: debate_ads/build_memes.py.
+
+topics:
+  - name: "Phones in school"
+    statement: "Phones should be banned in school"
+    memes:
+      - title: "Phones are in the room. Students aren't."
+        stance: for
+        claim: "Phones take students' attention away from lessons."
+        gif: assets/img/persuasive-memes/phones-school-attention.gif
+        premises:
+          - claim: "Teachers lose the class to phones."
+            caption: "teacher: any questions?"
+          - claim: "Students look at their phones instead of the lesson."
+            caption: "the class:"
+          - claim: "What isn't heard isn't learned."
+            caption: "the exam a week later:"
+      - title: "Bring break time back."
+        stance: for
+        claim: "Phones have replaced active play at break time."
+        gif: assets/img/persuasive-memes/phones-school-playground.gif
+        premises:
+          - claim: "Children used to play actively at break."
+            caption: "break time in 2006"
+          - claim: "Now they sit silently on their phones."
+            caption: "break time now"
+          - claim: "A phone-free school brings play back."
+            caption: "first week of the phone ban:"
+      - title: "The bully is in her pocket."
+        stance: for
+        claim: "Phones let bullying reach students everywhere, including school."
+        gif: assets/img/persuasive-memes/phones-school-bullying.gif
+        premises:
+          - claim: "Phones spread bullying during the school day."
+            caption: "lunch break: someone screenshots her photo"
+          - claim: "It follows her home."
+            caption: "10pm, the group chat:"
+          - claim: "A phone-free school day gives her a break from it."
+            caption: "a phone-free school day:"
+      - title: "Fewer screens. Deeper minds."
+        stance: for
+        claim: "Phones make deep concentration impossible."
+        gif: assets/img/persuasive-memes/phones-school-deep-work.gif
+        premises:
+          - claim: "Phones tempt students even while they study."
+            caption: "me trying to read one page:"
+          - claim: "Every check breaks concentration."
+            caption: "page 1, attempt 14:"
+          - claim: "Without the phone, focus returns."
+            caption: "phones locked away at school:"
+      - title: "Lunch is for friends, not feeds."
+        stance: for
+        claim: "Phones stop students from socialising."
+        gif: assets/img/persuasive-memes/phones-school-lunch-table.gif
+        premises:
+          - claim: "Phones silence the lunch table."
+            caption: "lunch with phones"
+          - claim: "Without phones, students talk and laugh."
+            caption: "lunch without phones"
+      - title: "How else will she call home?"
+        stance: against
+        claim: "Students need phones to stay safe."
+        gif: assets/img/persuasive-memes/phones-school-safety.gif
+        premises:
+          - claim: "Things go wrong on the way to and from school."
+            caption: "the school bus is cancelled because of snow"
+          - claim: "Without a phone, a child can't reach her parents."
+            caption: "her, without a phone:"
+          - claim: "With a phone, help arrives in minutes."
+            caption: "her mum, 5 minutes after one text:"
+      - title: "Why ban a microscope?"
+        stance: against
+        claim: "Phones are useful learning tools."
+        gif: assets/img/persuasive-memes/phones-school-learning-tool.gif
+        premises:
+          - claim: "Schools lack equipment."
+            caption: "school: we can't afford microscopes"
+          - claim: "Phones can do the job."
+            caption: "the 30 microscopes in our pockets:"
+          - claim: "Teachers can guide good use."
+            caption: "teaching, not banning:"
+      - title: "Ban phones, and who translates for him?"
+        stance: against
+        claim: "Phones help newly arrived children follow lessons and be included."
+        gif: assets/img/persuasive-memes/phones-school-translation.gif
+        premises:
+          - claim: "Newcomers can't follow lessons in a language they don't know."
+            caption: "day one in a new country:"
+          - claim: "A translation app bridges the gap."
+            caption: "a translation app:"
+          - claim: "Then he can join in."
+            caption: "week three:"
+      - title: "Self-control is learned, not banned."
+        stance: against
+        claim: "Banning phones stops students from learning self-control."
+        gif: assets/img/persuasive-memes/phones-school-self-control.gif
+        premises:
+          - claim: "A ban removes the phone instead of teaching how to use it."
+            caption: "no phones allowed until 18"
+          - claim: "Students never practise using phones well."
+            caption: "first week of university:"
+          - claim: "Practising at school builds the habit."
+            caption: "what school could teach instead:"
+      - title: "Not a distraction. A lifeline."
+        stance: against
+        claim: "For some students a phone is a medical necessity."
+        gif: assets/img/persuasive-memes/phones-school-medical.gif
+        premises:
+          - claim: "Bans treat every phone as a distraction."
+            caption: "\"phones are just a distraction\""
+          - claim: "For a diabetic student, the phone warns of danger."
+            caption: "my blood sugar app:"
+          - claim: "With the phone, he handles it quietly and stays in class."
+            caption: "two minutes later:"
+  - name: "Social media"
+    statement: "Social media should be banned"
+    memes:
+      - title: "Scroll. Compare. Despair."
+        stance: for
+        claim: "Social media damages young people's self-image."
+        gif: assets/img/persuasive-memes/social-media-comparison.gif
+        premises:
+          - claim: "Feeds show staged perfection."
+            caption: "her feed"
+          - claim: "Viewers compare themselves and feel worse."
+            caption: "me looking at her feed at 2am"
+          - claim: "Without the feed, there is nothing to compare to."
+            caption: "a weekend without social media:"
+      - title: "Lies travel faster than truth."
+        stance: for
+        claim: "Social media spreads lies faster than the truth."
+        gif: assets/img/persuasive-memes/social-media-misinformation.gif
+        premises:
+          - claim: "Sensational posts spread instantly."
+            caption: "a fake post, 8:00"
+          - claim: "People share without checking."
+            caption: "8:05, shared 10,000 times:"
+          - claim: "The correction reaches almost no one."
+            caption: "the correction, two days later:"
+      - title: "Just one more scroll?"
+        stance: for
+        claim: "Social media is designed to be addictive."
+        gif: assets/img/persuasive-memes/social-media-addiction.gif
+        premises:
+          - claim: "The app promises it will be quick."
+            caption: "\"just 5 minutes\""
+          - claim: "Hours disappear."
+            caption: "the birds start singing:"
+          - claim: "The cost shows up the next day."
+            caption: "work, 9am:"
+      - title: "Angry feeds, broken families."
+        stance: for
+        claim: "Social media algorithms polarise people and divide families."
+        gif: assets/img/persuasive-memes/social-media-polarization.gif
+        premises:
+          - claim: "Algorithms feed people outrage."
+            caption: "his feed, all evening:"
+          - claim: "The anger comes to the dinner table."
+            caption: "family dinner:"
+          - claim: "Families stop talking."
+            caption: "christmas, next year:"
+      - title: "Live the moment. Don't post it."
+        stance: for
+        claim: "Life is better lived than posted."
+        gif: assets/img/persuasive-memes/social-media-life-without.gif
+        premises:
+          - claim: "Posting pulls us out of the experience."
+            caption: "concert with social media"
+          - claim: "Without it, we are present."
+            caption: "concert without it"
+      - title: "One post started a movement."
+        stance: against
+        claim: "Social media gives ordinary people a voice that creates change."
+        gif: assets/img/persuasive-memes/social-media-voice.gif
+        premises:
+          - claim: "Authorities ignored the problem."
+            caption: "the council ignored the trash for 3 years"
+          - claim: "One post made it visible."
+            caption: "one post:"
+          - claim: "Neighbours mobilised."
+            caption: "one weekend later:"
+      - title: "Miles apart. Never out of touch."
+        stance: against
+        claim: "Social media keeps distant families connected."
+        gif: assets/img/persuasive-memes/social-media-distance.gif
+        premises:
+          - claim: "Families live far apart."
+            caption: "me, 4,000 km from home, posting my graduation"
+          - claim: "Social media lets them share the moment."
+            caption: "grandma, seeing my post:"
+      - title: "Ban it, and who finds her bakery?"
+        stance: against
+        claim: "Social media helps small businesses survive."
+        gif: assets/img/persuasive-memes/social-media-small-business.gif
+        premises:
+          - claim: "Small shops struggle to be seen."
+            caption: "my bakery before social media"
+          - claim: "One video reaches thousands."
+            caption: "one video:"
+          - claim: "Customers come."
+            caption: "the next morning:"
+      - title: "Alone in town. At home online."
+        stance: against
+        claim: "Social media helps isolated young people find their community."
+        gif: assets/img/persuasive-memes/social-media-belonging.gif
+        premises:
+          - claim: "In his town he has nobody like him."
+            caption: "only deaf kid in my town"
+          - claim: "Online he finds his community."
+            caption: "300 friends who sign online:"
+      - title: "Limits, not bans."
+        stance: against
+        claim: "Risky technologies should be regulated, not banned."
+        gif: assets/img/persuasive-memes/social-media-regulate-not-ban.gif
+        premises:
+          - claim: "Cars are dangerous too."
+            caption: "cars: dangerous"
+          - claim: "We made them safer with rules instead of banning them."
+            caption: "we didn't ban them. we invented seatbelts:"
+          - claim: "Social media can get its own seatbelts."
+            caption: "social media's seatbelt:"
+  - name: "Drones"
+    statement: "Drones should be regulated"
+    memes:
+      - title: "Who's flying in their path?"
+        stance: for
+        claim: "Unregulated drones endanger aircraft."
+        gif: assets/img/persuasive-memes/drones-airport.gif
+        premises:
+          - claim: "Anyone can fly a cheap drone anywhere."
+            caption: "someone's $300 drone"
+          - claim: "Near airports, drones meet airliners."
+            caption: "pilots on final approach:"
+          - claim: "Rules keep drones away from airports."
+            caption: "with a no-fly zone:"
+      - title: "Who's watching your window?"
+        stance: for
+        claim: "Drones can be used to invade privacy."
+        gif: assets/img/persuasive-memes/drones-privacy.gif
+        premises:
+          - claim: "Owners claim innocent purposes."
+            caption: "\"it's for landscape photography\""
+          - claim: "The camera ends up pointed at the neighbours."
+            caption: "the landscape:"
+      - title: "Your drone grounds their helicopter."
+        stance: for
+        claim: "Hobby drones get in the way of emergency services."
+        gif: assets/img/persuasive-memes/drones-wildfire.gif
+        premises:
+          - claim: "Firefighting aircraft are ready to help."
+            caption: "firefighting helicopter, ready to drop 2,000 litres"
+          - claim: "A hobby drone enters the airspace."
+            caption: "someone's hobby drone:"
+          - claim: "The aircraft must stay grounded while the fire spreads."
+            caption: "helicopter grounded:"
+      - title: "Whose drone? Nobody knows."
+        stance: for
+        claim: "Without registration, drone pilots can't be held accountable."
+        gif: assets/img/persuasive-memes/drones-accountability.gif
+        premises:
+          - claim: "Drones crash into public spaces."
+            caption: "the drone that crashed into our picnic"
+          - claim: "The owner can simply walk away."
+            caption: "its owner:"
+      - title: "Their home is not your playground."
+        stance: for
+        claim: "Drones disturb wildlife."
+        gif: assets/img/persuasive-memes/drones-wildlife.gif
+        premises:
+          - claim: "Nesting colonies need peace."
+            caption: "1,000 seabirds nesting in peace"
+          - claim: "One drone causes panic."
+            caption: "one guy with a drone:"
+      - title: "Grounded drones find no one."
+        stance: against
+        claim: "Heavy regulation gets in the way of life-saving drone use."
+        gif: assets/img/persuasive-memes/drones-search-rescue.gif
+        premises:
+          - claim: "People get lost in dangerous terrain."
+            caption: "lost hiker, night falling"
+          - claim: "A volunteer's drone finds him fast."
+            caption: "a volunteer's drone finds him in 12 minutes"
+          - claim: "Bureaucracy slows rescuers down."
+            caption: "regulators: where's your permit?"
+      - title: "Why tie farmers in red tape?"
+        stance: against
+        claim: "Drone regulation burdens farmers who use drones for good."
+        gif: assets/img/persuasive-memes/drones-farming.gif
+        premises:
+          - claim: "Drones help farmers spray less pesticide."
+            caption: "a drone that sprays only the sick plants"
+          - claim: "The paperwork makes it impractical."
+            caption: "the paperwork:"
+      - title: "Creativity shouldn't need a permit."
+        stance: against
+        claim: "Permits stifle creative drone use."
+        gif: assets/img/persuasive-memes/drones-creativity.gif
+        premises:
+          - claim: "Drones open up new creative views."
+            caption: "the shot I wanted"
+          - claim: "The permit process kills the idea."
+            caption: "the permit I'd need"
+      - title: "When roads fail, drones deliver."
+        stance: against
+        claim: "Drones deliver vital goods where roads fail."
+        gif: assets/img/persuasive-memes/drones-medicine-delivery.gif
+        premises:
+          - claim: "Remote clinics get cut off."
+            caption: "the road to the village clinic"
+          - claim: "A drone gets the medicine through."
+            caption: "the medicine"
+          - claim: "Strict rules would ground it."
+            caption: "new rule: no flights beyond line of sight"
+      - title: "Is this the danger?"
+        stance: against
+        claim: "Most drone pilots are harmless; blanket rules punish them."
+        gif: assets/img/persuasive-memes/drones-hobbyists.gif
+        premises:
+          - claim: "New rules treat all pilots as a threat."
+            caption: "new law: drone pilots are a danger to the public"
+          - claim: "Most pilots are families having fun."
+            caption: "the danger to the public:"

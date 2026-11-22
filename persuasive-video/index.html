@@ -32,4 +32,19 @@ description: Videos that try to change what people think or do, grouped by topic
       </div>
     </a>
   {% endfor %}
+
+  {% assign meme_count = 0 %}
+  {% for topic in site.data.persuasive_memes.topics %}
+    {% assign meme_count = meme_count | plus: topic.memes.size %}
+  {% endfor %}
+  <a class="pv-topic" href="{{ '/persuasive-video/memes/' | relative_url }}">
+    <div class="pv-topic-cover">
+      <img src="{{ 'assets/img/persuasive-memes/phones-school-attention.gif' | relative_url }}" alt="" loading="lazy">
+    </div>
+    <div class="pv-topic-body">
+      <h2 class="pv-topic-title">Persuasive Memes</h2>
+      <p class="pv-topic-desc">Animated memes for and against three debate statements, each built from a tree of claims.</p>
+      <span class="pv-topic-count">{{ meme_count }} memes</span>
+    </div>
+  </a>
 </div>

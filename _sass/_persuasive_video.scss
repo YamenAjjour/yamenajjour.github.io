@@ -244,3 +244,94 @@
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
+
+// Persuasive Memes (/persuasive-video/memes/): animated memes grouped by debate statement
+
+.pm-toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0 0.5rem;
+
+  a {
+    padding: 0.25rem 0.75rem;
+    border: 1px solid var(--global-divider-color);
+    border-radius: 999px;
+    font-size: 0.85rem;
+  }
+
+  span {
+    margin-left: 0.25rem;
+    color: var(--global-text-color-light);
+  }
+}
+
+.pm-topic {
+  margin-top: 2rem;
+  scroll-margin-top: 4.5rem;
+}
+
+.pm-topic-title {
+  margin-bottom: 0.25rem;
+  font-size: 1.4rem;
+}
+
+.pm-statement {
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+.pm-gif {
+  background-color: #000;
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+}
+
+.pv-meta .pm-stance {
+  display: inline-block;
+  margin-bottom: 0.4rem;
+  padding: 0 0.45rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.pm-stance--for {
+  background-color: color-mix(in srgb, #2e8b57 16%, transparent);
+  color: #2e8b57;
+}
+
+.pm-stance--against {
+  background-color: color-mix(in srgb, #c0392b 16%, transparent);
+  color: #c0392b;
+}
+
+.pm-tree {
+  margin: 0 0 0.5rem;
+  font-size: 0.85rem;
+
+  summary {
+    cursor: pointer;
+    color: var(--global-theme-color);
+  }
+
+  ol {
+    margin: 0.4rem 0 0;
+    padding-left: 1.2rem;
+  }
+
+  li {
+    margin-bottom: 0.25rem;
+  }
+}
+
+.pm-caption {
+  color: var(--global-text-color-light);
+  font-style: italic;
+}

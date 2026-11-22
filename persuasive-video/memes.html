@@ -1,0 +1,58 @@
+---
+layout: page
+title: Persuasive Memes
+permalink: /persuasive-video/memes/
+description: Animated memes that argue for or against a debate statement, each built from a tree of claims.
+---
+
+{% comment %}
+  Memes come from _data/persuasive_memes.yml (topics -> memes). GIFs live in assets/img/persuasive-memes/.
+{% endcomment %}
+<p class="pv-back">
+  <a href="{{ '/persuasive-video/' | relative_url }}"><i class="fa-solid fa-arrow-left"></i> All topics</a>
+</p>
+
+<p>
+  Each meme argues one side of a debate statement. It is built from a small tree of claims: the main claim becomes the meme's title, and every
+  supporting claim becomes one frame, a short caption over a picture. The pictures were generated with Qwen-Image-2.1.
+</p>
+
+{% assign topics = site.data.persuasive_memes.topics %}
+<nav class="pm-toc" aria-label="Debate statements">
+  {% for topic in topics %}
+    <a href="#{{ topic.name | slugify }}">{{ topic.name }} <span>{{ topic.memes | size }}</span></a>
+  {% endfor %}
+</nav>
+
+{% for topic in topics %}
+  <section class="pm-topic" id="{{ topic.name | slugify }}">
+    <h2 class="pm-topic-title">{{ topic.name }}</h2>
+    <p class="pm-statement"><span class="pv-label">Statement</span>{{ topic.statement }}</p>
+
+    <div class="pv-videos">
+      {% for meme in topic.memes %}
+        <figure class="pv-video">
+          <div class="pm-gif">
+            <img src="{{ meme.gif | relative_url }}" alt="Animated meme: {{ meme.title | escape }}" loading="lazy" decoding="async">
+          </div>
+          <figcaption class="pv-meta">
+            <p class="pm-stance pm-stance--{{ meme.stance }}">{% if meme.stance == 'for' %}For{% else %}Against{% endif %}</p>
+            <h3 class="pv-video-title">{{ meme.title }}</h3>
+            <p><span class="pv-label">Claim</span>{{ meme.claim }}</p>
+            <details class="pm-tree">
+              <summary>Claim tree</summary>
+              <ol>
+                {% for premise in meme.premises %}
+                  <li>
+                    {{ premise.claim }} <span class="pm-caption">“{{ premise.caption }}”</span>
+                  </li>
+                {% endfor %}
+              </ol>
+            </details>
+            <p class="pv-source"><span class="pv-badge">AI-generated</span><span>Pictures: Qwen-Image-2.1</span></p>
+          </figcaption>
+        </figure>
+      {% endfor %}
+    </div>
+  </section>
+{% endfor %}
