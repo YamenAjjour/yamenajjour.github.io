@@ -1,203 +1,61 @@
-// Persuasive Video: topic gallery (/persuasive-video/) and topic pages (layout: video_topic)
+// Persuasive Memes (/persuasive-memes/): topic tabs and a one-meme-at-a-time viewer
 
-// Topic gallery
+$pm-for: #1e8a4c;
+$pm-against: #c0392b;
 
-.pv-topics {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
-  gap: 1rem;
-  margin-top: 0.5rem;
+.pm-intro {
+  max-width: 48rem;
 }
 
-.pv-topic {
+.pm-tabs {
   display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  border: 1px solid var(--global-divider-color);
-  border-radius: 8px;
-  background-color: var(--global-card-bg-color);
-  color: var(--global-text-color);
-  transition:
-    border-color 0.15s ease,
-    transform 0.15s ease;
+  gap: 0.5rem;
+  margin: 1.25rem 0 1rem;
+  padding-bottom: 0.25rem;
+  overflow-x: auto;
+  scrollbar-width: thin;
 
-  &:hover,
-  &:focus-visible {
-    border-color: var(--global-theme-color);
+  button {
+    display: flex;
+    flex: 1 0 9.5rem;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--global-divider-color);
+    border-radius: 8px;
+    background: var(--global-card-bg-color);
     color: var(--global-text-color);
-    transform: translateY(-2px);
-    text-decoration: none;
+    text-align: left;
+    cursor: pointer;
+
+    &:hover,
+    &:focus-visible {
+      border-color: var(--global-theme-color);
+    }
+
+    &[aria-selected="true"] {
+      border-color: var(--global-theme-color);
+      box-shadow: inset 0 -3px 0 var(--global-theme-color);
+    }
   }
 }
 
-.pv-topic-cover {
-  --pv-topic-color: var(--global-theme-color);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  aspect-ratio: 16 / 9;
-  background: linear-gradient(135deg, var(--pv-topic-color), color-mix(in srgb, var(--pv-topic-color) 55%, #000));
-  color: #fff;
-  font-size: 2.75rem;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+.pm-tab-name {
+  font-weight: 600;
+  color: inherit;
 }
 
-.pv-topic-body {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  gap: 0.35rem;
-  padding: 0.85rem 1rem 1rem;
-}
-
-.pv-topic-title {
-  margin: 0;
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: var(--global-theme-color);
-}
-
-.pv-topic-desc {
-  margin: 0;
-  font-size: 0.9rem;
-  color: var(--global-text-color-light);
-}
-
-.pv-topic-count {
-  margin-top: auto;
-  padding-top: 0.25rem;
+.pm-tab-statement {
   font-size: 0.8rem;
+  line-height: 1.25;
   color: var(--global-text-color-light);
 }
 
-// Topic page
-
-.pv-back {
-  margin-bottom: 1.25rem;
-  font-size: 0.9rem;
+.pm-app [hidden] {
+  display: none !important;
 }
 
-.pv-videos {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
-  gap: 1.5rem;
-  align-items: start;
-}
-
-.pv-video {
-  margin: 0;
-  overflow: hidden;
-  border: 1px solid var(--global-divider-color);
-  border-radius: 8px;
-  background-color: var(--global-card-bg-color);
-}
-
-.pv-player {
-  background-color: #000;
-
-  > video,
-  > iframe,
-  > .pv-yt {
-    display: block;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    border: 0;
-  }
-}
-
-// Vertical videos (YouTube Shorts, 9:16 clips): sized by height, centred on black
-.pv-player--vertical {
-  > video,
-  > iframe,
-  > .pv-yt {
-    width: auto;
-    max-width: 100%;
-    height: min(640px, 75vh);
-    aspect-ratio: 9 / 16;
-    margin-inline: auto;
-  }
-}
-
-// YouTube "click to load" placeholder: nothing is requested from YouTube until it is clicked
-.pv-yt {
-  position: relative;
-  overflow: hidden;
-  padding: 0;
-  background: radial-gradient(circle at 50% 40%, #3a3a3e, #111);
-  color: #fff;
-  cursor: pointer;
-
-  img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  // The theme colours every span/div directly, so the white has to be set on the children too
-  .pv-play,
-  .pv-yt-note {
-    color: #fff;
-  }
-
-  &:hover .pv-play,
-  &:focus-visible .pv-play {
-    background-color: var(--global-theme-color);
-  }
-}
-
-.pv-play {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 68px;
-  height: 48px;
-  border-radius: 12px;
-  background-color: rgba(0, 0, 0, 0.7);
-  font-size: 1.25rem;
-  transform: translate(-50%, -50%);
-  transition: background-color 0.15s ease;
-}
-
-.pv-yt-note {
-  position: absolute;
-  right: 0.6rem;
-  bottom: 0.5rem;
-  padding: 0.1rem 0.4rem;
-  border-radius: 4px;
-  background-color: rgba(0, 0, 0, 0.55);
-  font-size: 0.75rem;
-}
-
-.pv-meta {
-  padding: 0.85rem 1rem 1rem;
-
-  p {
-    margin: 0 0 0.5rem;
-    font-size: 0.9rem;
-  }
-
-  > :last-child {
-    margin-bottom: 0;
-  }
-}
-
-.pv-video-title {
-  margin: 0 0 0.35rem;
-  font-size: 1.05rem;
-  font-weight: 500;
-}
-
-.pv-label {
+.pm-label {
   margin-right: 0.35rem;
   font-size: 0.7rem;
   font-weight: 600;
@@ -206,37 +64,7 @@
   color: var(--global-text-color-light);
 }
 
-.pv-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-  margin: 0 0 0.5rem;
-  padding: 0;
-  list-style: none;
-
-  li {
-    padding: 0.1rem 0.55rem;
-    border-radius: 999px;
-    background-color: color-mix(in srgb, var(--global-theme-color) 12%, transparent);
-    color: var(--global-theme-color);
-    font-size: 0.75rem;
-  }
-}
-
-.pv-meta .pv-source {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.8rem;
-  color: var(--global-text-color-light);
-
-  span {
-    color: inherit;
-  }
-}
-
-.pv-badge {
+.pm-badge {
   padding: 0 0.4rem;
   border: 1px solid var(--global-divider-color);
   border-radius: 4px;
@@ -244,11 +72,6 @@
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
-
-// Persuasive Memes: topic list (/persuasive-video/memes/) and topic pages (layout: meme_topic)
-
-$pm-for: #1e8a4c;
-$pm-against: #c0392b;
 
 .pm-eyebrow {
   margin: 0;
@@ -259,11 +82,7 @@ $pm-against: #c0392b;
   color: var(--global-text-color-light);
 }
 
-.pm-topics .pv-topic-cover img {
-  object-position: top; // show the meme's title bar
-}
-
-.pm-hero-counts {
+.pm-counts {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
@@ -287,8 +106,6 @@ $pm-against: #c0392b;
   color: $pm-against;
 }
 
-// Topic page
-
 .pm-hero {
   margin-bottom: 1.5rem;
   padding: 1.25rem 1.5rem;
@@ -304,10 +121,6 @@ $pm-against: #c0392b;
   font-weight: 600;
   line-height: 1.2;
   color: var(--global-text-color);
-}
-
-.pm-viewer [hidden] {
-  display: none !important;
 }
 
 .pm-toolbar {
@@ -476,13 +289,17 @@ $pm-against: #c0392b;
   color: var(--global-text-color-light);
 }
 
-.pm-slide-meta .pv-source {
+.pm-source {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem;
   font-size: 0.8rem;
   color: var(--global-text-color-light);
+
+  span {
+    color: inherit;
+  }
 }
 
 .pm-dots {
@@ -530,4 +347,12 @@ $pm-against: #c0392b;
   &[aria-current="true"] {
     background-color: $pm-against;
   }
+}
+
+.pm-topic + .pm-topic {
+  margin-top: 2.5rem;
+}
+
+.pm-app--js .pm-topic + .pm-topic {
+  margin-top: 0;
 }

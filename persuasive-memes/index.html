@@ -1,0 +1,207 @@
+---
+layout: page
+title: Persuasive Memes
+permalink: /persuasive-memes/
+description: Animated memes that argue for or against debate statements, each built from a tree of claims.
+---
+
+{% comment %}
+  Memes come from _data/persuasive_memes.yml (topics -> memes), written by debate_ads/export_site.py; GIFs are in
+  assets/img/persuasive-memes/. With JavaScript one topic and one meme are shown at a time (tabs, previous/next,
+  arrow keys, For/Against filter, links like #drones-3); without it every topic and meme is listed.
+{% endcomment %}
+{% assign topics = site.data.persuasive_memes.topics %}
+
+<p class="pm-intro">
+  Each meme takes one side of a debate statement. It is built from a small tree of claims: the main claim becomes the meme's title, and every
+  supporting claim becomes one frame, a short caption over a picture. Pictures were generated with Qwen-Image-2.1.
+</p>
+
+<div class="pm-app" data-pm-app>
+  <div class="pm-tabs" role="tablist" aria-label="Debate topics" data-pm-tabs hidden>
+    {% for topic in topics %}
+      <button type="button" role="tab" id="tab-{{ topic.slug }}" aria-controls="{{ topic.slug }}" data-pm-tab="{{ topic.slug }}">
+        <span class="pm-tab-name">{{ topic.name }}</span>
+        <span class="pm-tab-statement">{{ topic.statement }}</span>
+      </button>
+    {% endfor %}
+  </div>
+
+  {% for topic in topics %}
+    {% assign n_for = topic.memes | where: "stance", "for" | size %}
+    {% assign n_against = topic.memes | where: "stance", "against" | size %}
+    {% assign topic_index = forloop.index %}
+    <section class="pm-topic" id="{{ topic.slug }}" role="tabpanel" aria-labelledby="tab-{{ topic.slug }}" data-pm-topic="{{ topic.slug }}">
+      <header class="pm-hero">
+        <p class="pm-eyebrow">Debate statement · {{ topic.name }}</p>
+        <h2 class="pm-hero-statement">“{{ topic.statement }}”</h2>
+        <p class="pm-counts">
+          <span class="pm-pill pm-pill--for"><i class="fa-solid fa-thumbs-up" aria-hidden="true"></i> {{ n_for }} for</span>
+          <span class="pm-pill pm-pill--against"><i class="fa-solid fa-thumbs-down" aria-hidden="true"></i> {{ n_against }} against</span>
+        </p>
+      </header>
+
+      <div class="pm-toolbar" data-pm-toolbar hidden>
+        <div class="pm-filter" role="group" aria-label="Show memes">
+          <button type="button" data-pm-filter="all" aria-pressed="true">All</button>
+          <button type="button" data-pm-filter="for" aria-pressed="false">For</button>
+          <button type="button" data-pm-filter="against" aria-pressed="false">Against</button>
+        </div>
+        <div class="pm-nav">
+          <button type="button" class="pm-arrow" data-pm-prev aria-label="Previous meme"><i class="fa-solid fa-chevron-left"></i></button>
+          <span class="pm-counter" data-pm-counter aria-live="polite"></span>
+          <button type="button" class="pm-arrow" data-pm-next aria-label="Next meme"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+      </div>
+
+      {% for meme in topic.memes %}
+        <article class="pm-slide pm-slide--{{ meme.stance }}" id="{{ topic.slug }}-{{ forloop.index }}" data-stance="{{ meme.stance }}">
+          <p class="pm-banner pm-banner--{{ meme.stance }}">
+            {% if meme.stance == 'for' %}
+              <strong><i class="fa-solid fa-thumbs-up" aria-hidden="true"></i> For</strong>
+              <span>argues for “{{ topic.statement }}”</span>
+            {% else %}
+              <strong><i class="fa-solid fa-thumbs-down" aria-hidden="true"></i> Against</strong>
+              <span>argues against “{{ topic.statement }}”</span>
+            {% endif %}
+          </p>
+          <div class="pm-big">
+            <img
+              src="{{ meme.gif | relative_url }}"
+              alt="Animated meme: {{ meme.title | escape }}"
+              {% unless topic_index == 1 and forloop.first %}
+                loading="lazy"
+              {% endunless %}
+              decoding="async"
+            >
+          </div>
+          <div class="pm-slide-meta">
+            <h3 class="pm-slide-title">{{ meme.title }}</h3>
+            <p><span class="pm-label">Main claim</span>{{ meme.claim }}</p>
+            <details class="pm-tree">
+              <summary>Claim tree: why the claim holds</summary>
+              <ol>
+                {% for premise in meme.premises %}
+                  <li>
+                    {{ premise.claim }} <span class="pm-caption">Frame {{ forloop.index }}: “{{ premise.caption }}”</span>
+                  </li>
+                {% endfor %}
+              </ol>
+            </details>
+            <p class="pm-source"><span class="pm-badge">AI-generated</span><span>Pictures: Qwen-Image-2.1</span></p>
+          </div>
+        </article>
+      {% endfor %}
+
+      <nav class="pm-dots" data-pm-dots aria-label="Memes about {{ topic.name }}" hidden>
+        {% for meme in topic.memes %}
+          <a
+            href="#{{ topic.slug }}-{{ forloop.index }}"
+            class="pm-dot pm-dot--{{ meme.stance }}"
+            data-pm-dot="{{ forloop.index0 }}"
+            title="{% if meme.stance == 'for' %}For{% else %}Against{% endif %}: {{ meme.title | escape }}"
+            >{{ forloop.index }}</a
+          >
+        {% endfor %}
+      </nav>
+    </section>
+  {% endfor %}
+</div>
+
+<script>
+  /* Topic tabs + one-meme-at-a-time viewer. URL hash: #<topic> or #<topic>-<n>. */
+  (function () {
+    var app = document.querySelector('[data-pm-app]');
+    if (!app) return;
+    app.classList.add('pm-app--js');
+    var tabs = Array.prototype.slice.call(app.querySelectorAll('[data-pm-tab]'));
+    var filter = 'all';
+    var viewers = {};
+    var active = null;
+
+    Array.prototype.forEach.call(app.querySelectorAll('[data-pm-topic]'), function (sec) {
+      var slug = sec.dataset.pmTopic;
+      var v = {
+        sec: sec,
+        slides: Array.prototype.slice.call(sec.querySelectorAll('.pm-slide')),
+        dots: Array.prototype.slice.call(sec.querySelectorAll('[data-pm-dot]')),
+        counter: sec.querySelector('[data-pm-counter]'),
+        current: 0,
+      };
+      viewers[slug] = v;
+      sec.querySelector('[data-pm-toolbar]').hidden = false;
+      sec.querySelector('[data-pm-dots]').hidden = false;
+      sec.querySelector('[data-pm-prev]').addEventListener('click', function () { step(-1); });
+      sec.querySelector('[data-pm-next]').addEventListener('click', function () { step(1); });
+      v.dots.forEach(function (d, k) {
+        d.addEventListener('click', function (e) { e.preventDefault(); show(visible(v).indexOf(v.slides[k])); });
+      });
+      Array.prototype.forEach.call(sec.querySelectorAll('[data-pm-filter]'), function (b) {
+        b.addEventListener('click', function () { filter = b.dataset.pmFilter; show(Math.max(0, visible(v).indexOf(v.slides[v.current]))); });
+      });
+    });
+    app.querySelector('[data-pm-tabs]').hidden = false;
+
+    function visible(v) {
+      return v.slides.filter(function (s) { return filter === 'all' || s.dataset.stance === filter; });
+    }
+    function show(i) {
+      var v = viewers[active];
+      var list = visible(v);
+      if (!list.length) return;
+      i = (i + list.length) % list.length;
+      v.current = v.slides.indexOf(list[i]);
+      v.slides.forEach(function (s, k) { s.hidden = k !== v.current; });
+      v.dots.forEach(function (d, k) {
+        d.hidden = list.indexOf(v.slides[k]) < 0;
+        if (k === v.current) d.setAttribute('aria-current', 'true'); else d.removeAttribute('aria-current');
+      });
+      Array.prototype.forEach.call(v.sec.querySelectorAll('[data-pm-filter]'), function (b) {
+        b.setAttribute('aria-pressed', String(b.dataset.pmFilter === filter));
+      });
+      v.counter.textContent = (i + 1) + ' / ' + list.length;
+      history.replaceState(null, '', '#' + v.slides[v.current].id);
+    }
+    function step(d) {
+      var v = viewers[active];
+      show(visible(v).indexOf(v.slides[v.current]) + d);
+    }
+    function openTopic(slug, n) {
+      active = slug;
+      Object.keys(viewers).forEach(function (s) { viewers[s].sec.hidden = s !== slug; });
+      tabs.forEach(function (t) {
+        var on = t.dataset.pmTab === slug;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+      });
+      var v = viewers[slug];
+      var i = n ? visible(v).indexOf(v.slides[Math.min(v.slides.length, n) - 1]) : visible(v).indexOf(v.slides[v.current]);
+      show(Math.max(0, i));
+    }
+
+    tabs.forEach(function (t, k) {
+      t.addEventListener('click', function () { openTopic(t.dataset.pmTab); });
+      t.addEventListener('keydown', function (e) {
+        if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+        e.preventDefault();
+        e.stopPropagation();
+        var next = tabs[(k + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+        next.focus();
+        openTopic(next.dataset.pmTab);
+      });
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey || e.target.closest('input, textarea, select, [role="tab"]')) return;
+      if (e.key === 'ArrowLeft') step(-1);
+      if (e.key === 'ArrowRight') step(1);
+    });
+
+    function fromHash() {
+      var m = /^#(.+?)(?:-(\d+))?$/.exec(location.hash);
+      var slug = m && viewers[m[1]] ? m[1] : active || tabs[0].dataset.pmTab;
+      openTopic(slug, m && viewers[m[1]] && m[2] ? +m[2] : 0);
+    }
+    window.addEventListener('hashchange', fromHash); // links to #topic-n on this page
+    fromHash();
+  })();
+</script>

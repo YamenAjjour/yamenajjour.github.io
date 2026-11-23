@@ -1,50 +1,18 @@
 ---
-layout: page
-title: Persuasive Video
+layout: null
 permalink: /persuasive-video/
-description: Videos that try to change what people think or do, grouped by topic.
+sitemap: false
 ---
-
-{% comment %}
-  Lists every topic page (files in persuasive-video/ with `layout: video_topic`), sorted by their `order` field.
-{% endcomment %}
-{% assign topics = site.pages | where: "layout", "video_topic" | sort: "order" %}
-
-<div class="pv-topics">
-  {% for topic in topics %}
-    {% assign video_count = topic.videos | size %}
-    <a class="pv-topic" href="{{ topic.url | relative_url }}">
-      <div class="pv-topic-cover"{% if topic.color %} style="--pv-topic-color: {{ topic.color }}"{% endif %}>
-        {% if topic.image %}
-          <img src="{{ topic.image | relative_url }}" alt="" loading="lazy">
-        {% else %}
-          <i class="{{ topic.icon | default: 'fa-solid fa-film' }}" aria-hidden="true"></i>
-        {% endif %}
-      </div>
-      <div class="pv-topic-body">
-        <h2 class="pv-topic-title">{{ topic.title }}</h2>
-        {% if topic.description %}
-          <p class="pv-topic-desc">{{ topic.description }}</p>
-        {% endif %}
-        <span class="pv-topic-count">
-          {% if video_count == 0 %}Coming soon{% else %}{{ video_count }} video{% if video_count != 1 %}s{% endif %}{% endif %}
-        </span>
-      </div>
-    </a>
-  {% endfor %}
-
-  {% assign meme_count = 0 %}
-  {% for topic in site.data.persuasive_memes.topics %}
-    {% assign meme_count = meme_count | plus: topic.memes.size %}
-  {% endfor %}
-  <a class="pv-topic" href="{{ '/persuasive-video/memes/' | relative_url }}">
-    <div class="pv-topic-cover">
-      <img src="{{ 'assets/img/persuasive-memes/phones-school-attention.gif' | relative_url }}" alt="" loading="lazy">
-    </div>
-    <div class="pv-topic-body">
-      <h2 class="pv-topic-title">Persuasive Memes</h2>
-      <p class="pv-topic-desc">Animated memes for and against five debate statements, each built from a tree of claims.</p>
-      <span class="pv-topic-count">{{ meme_count }} memes</span>
-    </div>
-  </a>
-</div>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Moved to Persuasive Memes</title>
+    <meta name="robots" content="noindex">
+    <link rel="canonical" href="{{ '/persuasive-memes/' | absolute_url }}">
+    <meta http-equiv="refresh" content="0; url={{ '/persuasive-memes/' | relative_url }}">
+  </head>
+  <body>
+    <p>This page moved to <a href="{{ '/persuasive-memes/' | relative_url }}">Persuasive Memes</a>.</p>
+  </body>
+</html>
