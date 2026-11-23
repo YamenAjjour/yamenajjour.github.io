@@ -245,76 +245,215 @@
   text-transform: uppercase;
 }
 
-// Persuasive Memes (/persuasive-video/memes/): animated memes grouped by debate statement
+// Persuasive Memes: topic list (/persuasive-video/memes/) and topic pages (layout: meme_topic)
 
-.pm-toc {
+$pm-for: #1e8a4c;
+$pm-against: #c0392b;
+
+.pm-eyebrow {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--global-text-color-light);
+}
+
+.pm-topics .pv-topic-cover img {
+  object-position: top; // show the meme's title bar
+}
+
+.pm-hero-counts {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  margin: 1rem 0 0.5rem;
+  gap: 0.4rem;
+  margin: 0;
+}
 
-  a {
-    padding: 0.25rem 0.75rem;
-    border: 1px solid var(--global-divider-color);
-    border-radius: 999px;
+.pm-pill {
+  padding: 0.1rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.pm-pill--for {
+  background-color: color-mix(in srgb, #{$pm-for} 15%, transparent);
+  color: $pm-for;
+}
+
+.pm-pill--against {
+  background-color: color-mix(in srgb, #{$pm-against} 15%, transparent);
+  color: $pm-against;
+}
+
+// Topic page
+
+.pm-hero {
+  margin-bottom: 1.5rem;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--global-divider-color);
+  border-left: 6px solid var(--global-theme-color);
+  border-radius: 8px;
+  background-color: var(--global-card-bg-color);
+}
+
+.pm-hero-statement {
+  margin: 0.25rem 0 0.75rem;
+  font-size: clamp(1.4rem, 3.5vw, 2.1rem);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--global-text-color);
+}
+
+.pm-viewer [hidden] {
+  display: none !important;
+}
+
+.pm-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.pm-filter {
+  display: inline-flex;
+  overflow: hidden;
+  border: 1px solid var(--global-divider-color);
+  border-radius: 8px;
+
+  button {
+    padding: 0.35rem 0.9rem;
+    border: 0;
+    background: var(--global-card-bg-color);
+    color: var(--global-text-color);
     font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  button[aria-pressed="true"] {
+    background: var(--global-theme-color);
+    color: #fff;
+  }
+}
+
+.pm-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.pm-arrow {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid var(--global-divider-color);
+  border-radius: 50%;
+  background: var(--global-card-bg-color);
+  color: var(--global-text-color);
+  cursor: pointer;
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--global-theme-color);
+    color: var(--global-theme-color);
+  }
+}
+
+.pm-counter {
+  min-width: 3.5rem;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  color: var(--global-text-color-light);
+}
+
+.pm-slide {
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+  border: 3px solid var(--global-divider-color);
+  border-radius: 10px;
+  background-color: var(--global-card-bg-color);
+}
+
+.pm-slide--for {
+  border-color: $pm-for;
+}
+
+.pm-slide--against {
+  border-color: $pm-against;
+}
+
+.pm-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.75rem;
+  margin: 0;
+  padding: 0.6rem 1rem;
+  color: #fff;
+
+  // the theme colours spans and strongs directly, so the white is set on them too
+  strong,
+  span,
+  i {
+    color: #fff;
+  }
+
+  strong {
+    font-size: 1.3rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
   }
 
   span {
-    margin-left: 0.25rem;
-    color: var(--global-text-color-light);
+    font-size: 0.95rem;
   }
 }
 
-.pm-topic {
-  margin-top: 2rem;
-  scroll-margin-top: 4.5rem;
+.pm-banner--for {
+  background-color: $pm-for;
 }
 
-.pm-topic-title {
-  margin-bottom: 0.25rem;
-  font-size: 1.4rem;
+.pm-banner--against {
+  background-color: $pm-against;
 }
 
-.pm-statement {
-  margin-bottom: 1rem;
-  font-size: 0.95rem;
-}
-
-.pm-gif {
+.pm-big {
   background-color: #000;
 
   img {
     display: block;
-    width: 100%;
+    width: auto;
+    max-width: 100%;
     height: auto;
+    max-height: 75vh; // the whole meme fits on screen with its banner
+    margin-inline: auto;
   }
 }
 
-.pv-meta .pm-stance {
-  display: inline-block;
-  margin-bottom: 0.4rem;
-  padding: 0 0.45rem;
-  border-radius: 4px;
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+.pm-slide-meta {
+  padding: 1rem 1.25rem 1.1rem;
+
+  p {
+    margin: 0 0 0.5rem;
+  }
+
+  > :last-child {
+    margin-bottom: 0;
+  }
 }
 
-.pm-stance--for {
-  background-color: color-mix(in srgb, #2e8b57 16%, transparent);
-  color: #2e8b57;
-}
-
-.pm-stance--against {
-  background-color: color-mix(in srgb, #c0392b 16%, transparent);
-  color: #c0392b;
+.pm-slide-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.35rem;
 }
 
 .pm-tree {
-  margin: 0 0 0.5rem;
-  font-size: 0.85rem;
+  margin: 0 0 0.6rem;
+  font-size: 0.9rem;
 
   summary {
     cursor: pointer;
@@ -332,6 +471,63 @@
 }
 
 .pm-caption {
-  color: var(--global-text-color-light);
+  display: block;
   font-style: italic;
+  color: var(--global-text-color-light);
+}
+
+.pm-slide-meta .pv-source {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--global-text-color-light);
+}
+
+.pm-dots {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-top: 0.25rem;
+}
+
+.pm-dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: 2px solid;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  font-weight: 600;
+
+  &:hover,
+  &:focus-visible {
+    text-decoration: none;
+  }
+
+  &[aria-current="true"] {
+    color: #fff !important;
+  }
+}
+
+.pm-dot--for {
+  border-color: $pm-for;
+  color: $pm-for;
+
+  &[aria-current="true"] {
+    background-color: $pm-for;
+  }
+}
+
+.pm-dot--against {
+  border-color: $pm-against;
+  color: $pm-against;
+
+  &[aria-current="true"] {
+    background-color: $pm-against;
+  }
 }

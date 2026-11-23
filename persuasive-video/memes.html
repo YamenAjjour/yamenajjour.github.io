@@ -6,53 +6,34 @@ description: Animated memes that argue for or against a debate statement, each b
 ---
 
 {% comment %}
-  Memes come from _data/persuasive_memes.yml (topics -> memes). GIFs live in assets/img/persuasive-memes/.
+  Lists the debate topics in _data/persuasive_memes.yml; each links to its page in persuasive-video/memes/ (layout: meme_topic).
 {% endcomment %}
 <p class="pv-back">
   <a href="{{ '/persuasive-video/' | relative_url }}"><i class="fa-solid fa-arrow-left"></i> All topics</a>
 </p>
 
 <p>
-  Each meme argues one side of a debate statement. It is built from a small tree of claims: the main claim becomes the meme's title, and every
-  supporting claim becomes one frame, a short caption over a picture. The pictures were generated with Qwen-Image-2.1.
+  Each meme takes one side of a debate statement. It is built from a small tree of claims: the main claim becomes the meme's title, and every
+  supporting claim becomes one frame, a short caption over a picture. The pictures were generated with Qwen-Image-2.1. Pick a debate to see its
+  memes one at a time.
 </p>
 
-{% assign topics = site.data.persuasive_memes.topics %}
-<nav class="pm-toc" aria-label="Debate statements">
-  {% for topic in topics %}
-    <a href="#{{ topic.name | slugify }}">{{ topic.name }} <span>{{ topic.memes | size }}</span></a>
+<div class="pv-topics pm-topics">
+  {% for topic in site.data.persuasive_memes.topics %}
+    {% assign n_for = topic.memes | where: "stance", "for" | size %}
+    {% assign n_against = topic.memes | where: "stance", "against" | size %}
+    <a class="pv-topic" href="{{ '/persuasive-video/memes/' | append: topic.slug | append: '/' | relative_url }}">
+      <div class="pv-topic-cover">
+        <img src="{{ topic.memes[0].gif | relative_url }}" alt="" loading="lazy">
+      </div>
+      <div class="pv-topic-body">
+        <span class="pm-eyebrow">{{ topic.name }}</span>
+        <h2 class="pv-topic-title">“{{ topic.statement }}”</h2>
+        <span class="pm-hero-counts">
+          <span class="pm-pill pm-pill--for">{{ n_for }} for</span>
+          <span class="pm-pill pm-pill--against">{{ n_against }} against</span>
+        </span>
+      </div>
+    </a>
   {% endfor %}
-</nav>
-
-{% for topic in topics %}
-  <section class="pm-topic" id="{{ topic.name | slugify }}">
-    <h2 class="pm-topic-title">{{ topic.name }}</h2>
-    <p class="pm-statement"><span class="pv-label">Statement</span>{{ topic.statement }}</p>
-
-    <div class="pv-videos">
-      {% for meme in topic.memes %}
-        <figure class="pv-video">
-          <div class="pm-gif">
-            <img src="{{ meme.gif | relative_url }}" alt="Animated meme: {{ meme.title | escape }}" loading="lazy" decoding="async">
-          </div>
-          <figcaption class="pv-meta">
-            <p class="pm-stance pm-stance--{{ meme.stance }}">{% if meme.stance == 'for' %}For{% else %}Against{% endif %}</p>
-            <h3 class="pv-video-title">{{ meme.title }}</h3>
-            <p><span class="pv-label">Claim</span>{{ meme.claim }}</p>
-            <details class="pm-tree">
-              <summary>Claim tree</summary>
-              <ol>
-                {% for premise in meme.premises %}
-                  <li>
-                    {{ premise.claim }} <span class="pm-caption">“{{ premise.caption }}”</span>
-                  </li>
-                {% endfor %}
-              </ol>
-            </details>
-            <p class="pv-source"><span class="pv-badge">AI-generated</span><span>Pictures: Qwen-Image-2.1</span></p>
-          </figcaption>
-        </figure>
-      {% endfor %}
-    </div>
-  </section>
-{% endfor %}
+</div>

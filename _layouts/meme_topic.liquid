@@ -1,0 +1,152 @@
+---
+layout: page
+---
+{% comment %}
+  One debate topic of Persuasive Memes. Each topic is a file in persuasive-video/memes/ with `layout: meme_topic` and
+  `topic_key:` naming a topic in _data/persuasive_memes.yml (both written by debate_ads/export_site.py).
+  Shows one meme at a time; without JavaScript every meme is listed one below the other.
+{% endcomment %}
+{% assign topic = site.data.persuasive_memes.topics | where: "key", page.topic_key | first %}
+{% assign n_for = topic.memes | where: "stance", "for" | size %}
+{% assign n_against = topic.memes | where: "stance", "against" | size %}
+
+<p class="pv-back">
+  <a href="{{ '/persuasive-video/memes/' | relative_url }}"><i class="fa-solid fa-arrow-left"></i> All debate topics</a>
+</p>
+
+<header class="pm-hero">
+  <p class="pm-eyebrow">Debate statement</p>
+  <p class="pm-hero-statement">“{{ topic.statement }}”</p>
+  <p class="pm-hero-counts">
+    <span class="pm-pill pm-pill--for"><i class="fa-solid fa-thumbs-up" aria-hidden="true"></i> {{ n_for }} for</span>
+    <span class="pm-pill pm-pill--against"><i class="fa-solid fa-thumbs-down" aria-hidden="true"></i> {{ n_against }} against</span>
+  </p>
+</header>
+
+{{ content }}
+
+<div class="pm-viewer" data-pm-viewer>
+  <div class="pm-toolbar" data-pm-toolbar hidden>
+    <div class="pm-filter" role="group" aria-label="Show memes">
+      <button type="button" data-pm-filter="all" aria-pressed="true">All</button>
+      <button type="button" data-pm-filter="for" aria-pressed="false">For</button>
+      <button type="button" data-pm-filter="against" aria-pressed="false">Against</button>
+    </div>
+    <div class="pm-nav">
+      <button type="button" class="pm-arrow" data-pm-prev aria-label="Previous meme"><i class="fa-solid fa-chevron-left"></i></button>
+      <span class="pm-counter" data-pm-counter aria-live="polite"></span>
+      <button type="button" class="pm-arrow" data-pm-next aria-label="Next meme"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+  </div>
+
+  {% for meme in topic.memes %}
+    <article class="pm-slide pm-slide--{{ meme.stance }}" id="meme-{{ forloop.index }}" data-stance="{{ meme.stance }}">
+      <p class="pm-banner pm-banner--{{ meme.stance }}">
+        {% if meme.stance == 'for' %}
+          <strong><i class="fa-solid fa-thumbs-up" aria-hidden="true"></i> For</strong>
+          <span>argues for “{{ topic.statement }}”</span>
+        {% else %}
+          <strong><i class="fa-solid fa-thumbs-down" aria-hidden="true"></i> Against</strong>
+          <span>argues against “{{ topic.statement }}”</span>
+        {% endif %}
+      </p>
+      <div class="pm-big">
+        <img
+          src="{{ meme.gif | relative_url }}"
+          alt="Animated meme: {{ meme.title | escape }}"
+          {% unless forloop.first %}
+            loading="lazy"
+          {% endunless %}
+          decoding="async"
+        >
+      </div>
+      <div class="pm-slide-meta">
+        <h2 class="pm-slide-title">{{ meme.title }}</h2>
+        <p><span class="pv-label">Main claim</span>{{ meme.claim }}</p>
+        <details class="pm-tree">
+          <summary>Claim tree: why the claim holds</summary>
+          <ol>
+            {% for premise in meme.premises %}
+              <li>
+                {{ premise.claim }} <span class="pm-caption">Frame {{ forloop.index }}: “{{ premise.caption }}”</span>
+              </li>
+            {% endfor %}
+          </ol>
+        </details>
+        <p class="pv-source"><span class="pv-badge">AI-generated</span><span>Pictures: Qwen-Image-2.1</span></p>
+      </div>
+    </article>
+  {% endfor %}
+
+  <nav class="pm-dots" data-pm-dots aria-label="All memes in this topic" hidden>
+    {% for meme in topic.memes %}
+      <a
+        href="#meme-{{ forloop.index }}"
+        class="pm-dot pm-dot--{{ meme.stance }}"
+        data-pm-dot="{{ forloop.index0 }}"
+        title="{% if meme.stance == 'for' %}For{% else %}Against{% endif %}: {{ meme.title | escape }}"
+        >{{ forloop.index }}</a
+      >
+    {% endfor %}
+  </nav>
+</div>
+
+<script>
+  /* One-at-a-time meme viewer: Previous/Next, arrow keys, For/Against filter, #meme-N links. */
+  (function () {
+    var root = document.querySelector('[data-pm-viewer]');
+    if (!root) return;
+    var slides = Array.prototype.slice.call(root.querySelectorAll('.pm-slide'));
+    var dots = Array.prototype.slice.call(root.querySelectorAll('[data-pm-dot]'));
+    var counter = root.querySelector('[data-pm-counter]');
+    var filter = 'all';
+    var current = 0;
+    root.querySelector('[data-pm-toolbar]').hidden = false;
+    root.querySelector('[data-pm-dots]').hidden = false;
+    root.classList.add('pm-viewer--js');
+
+    function visible() {
+      return slides.filter(function (s) { return filter === 'all' || s.dataset.stance === filter; });
+    }
+    function show(i, updateHash) {
+      var list = visible();
+      if (!list.length) return;
+      i = (i + list.length) % list.length;
+      current = slides.indexOf(list[i]);
+      slides.forEach(function (s, k) { s.hidden = k !== current; });
+      dots.forEach(function (d, k) {
+        d.hidden = list.indexOf(slides[k]) < 0;
+        if (k === current) d.setAttribute('aria-current', 'true'); else d.removeAttribute('aria-current');
+      });
+      counter.textContent = (i + 1) + ' / ' + list.length;
+      if (updateHash) history.replaceState(null, '', '#' + slides[current].id);
+    }
+    function step(d) {
+      var list = visible();
+      show(list.indexOf(slides[current]) + d, true);
+    }
+    root.querySelector('[data-pm-prev]').addEventListener('click', function () { step(-1); });
+    root.querySelector('[data-pm-next]').addEventListener('click', function () { step(1); });
+    dots.forEach(function (d, k) {
+      d.addEventListener('click', function (e) {
+        e.preventDefault();
+        show(visible().indexOf(slides[k]), true);
+      });
+    });
+    root.querySelectorAll('[data-pm-filter]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        filter = b.dataset.pmFilter;
+        root.querySelectorAll('[data-pm-filter]').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+        var list = visible();
+        show(Math.max(0, list.indexOf(slides[current])), true);
+      });
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.target.closest('input, textarea, select') || e.altKey || e.ctrlKey || e.metaKey) return;
+      if (e.key === 'ArrowLeft') step(-1);
+      if (e.key === 'ArrowRight') step(1);
+    });
+    var m = /^#meme-(\d+)$/.exec(location.hash);
+    show(m ? Math.min(slides.length, Math.max(1, +m[1])) - 1 : 0, false);
+  })();
+</script>
