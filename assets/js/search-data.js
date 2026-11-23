@@ -108,11 +108,11 @@ ninja.data = [{
           description: "A benchmark of 46 computational argumentation tasks for evaluating LLMs.",
           section: "Projects",handler: () => {
               window.location.href = "/projects/argbench/";
-            },},{id: "projects-persuasive-video",
-          title: 'Persuasive Video',
-          description: "A gallery of persuasive videos, grouped by topic.",
+            },},{id: "projects-persuasive-memes",
+          title: 'Persuasive Memes',
+          description: "Animated memes for and against five debate statements, each built from a tree of claims.",
           section: "Projects",handler: () => {
-              window.location.href = "/projects/persuasive-video/";
+              window.location.href = "/projects/persuasive-memes/";
             },},{
         id: 'social-github',
         title: 'GitHub',
